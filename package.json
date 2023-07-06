@@ -11,7 +11,7 @@
   "scripts": {
     "clean": "rm -rf client/dist/; rm -rf server/dist/; rm -rf client/node_modules/; rm -rf server/node_modules/",
     "build": "npm run build --prefix client",
-    "install-all": "npm install --prefix client; npm install --prefix server",
+    "install-all": "npm install --prefix client --legacy-peer-deps; npm install --prefix server",
     "start": "npm start --prefix server"
   },
   "devDependencies": {},
