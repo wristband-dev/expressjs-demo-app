@@ -169,7 +169,7 @@ In one CLI, change to the `client` directory and run the following to start Crea
 
 ```npm start```
 
-In a second separate CLI, start the NodeJS server in "dev" mode (runs on port `3001`):
+In a second separate CLI, change to the `server` directory and run the following to start the NodeJS server in "dev" mode (runs on port `3001`):
 
 ```npm run dev```
 
