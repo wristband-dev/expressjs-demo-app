@@ -9,7 +9,7 @@
     "npm": ">=8.1.2"
   },
   "scripts": {
-    "start": "vite",
+    "start": "vite --host",
     "build": "rm -rf dist/; rm -rf ../server/dist/; vite build; mv \"./dist/\" \"../server/dist/\"",
     "serve": "vite preview",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",

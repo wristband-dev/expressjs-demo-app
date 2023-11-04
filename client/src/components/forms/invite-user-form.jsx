@@ -12,7 +12,7 @@ export function InviteUserForm() {
   const { data: userCount } = settingsHooks.useUserCount();
   const { mutate: cancelNewUserInvite } = settingsHooks.useCancelNewUserInvite();
   const { mutate: createNewUserInvite } = settingsHooks.useCreateNewUserInvite();
-  const userLimitReached = userCount > 1;
+  const userLimitReached = userCount > 2;
   const { items, totalResults } = invites;
   const hasExistingInvite = totalResults > 0;
 
