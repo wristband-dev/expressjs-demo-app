@@ -1,7 +1,7 @@
 'use strict';
 
-const apitopiaService = require('../services/wristband-service');
 const invotasticService = require('../services/invotastic-service');
+const wristbandService = require('../services/wristband-service');
 const { reqValidation } = require('../utils/validation');
 const {
   FORBIDDEN_ACCESS_RESPONSE,
@@ -27,7 +27,7 @@ exports.createInvoice = async (req, res, next) => {
   try {
     /* WRISTBAND_TOUCHPOINT - AUTHORIZATION */
     // Ensure the user has permission to write invoice data
-    const currentPermissions = await apitopiaService.getPermissionInfo(requiredPermissions, bearerToken(req));
+    const currentPermissions = await wristbandService.getPermissionInfo(requiredPermissions, bearerToken(req));
     if (!hasAccessToApi(requiredPermissions, currentPermissions) || companyId !== tenantId) {
       return res.status(403).json(FORBIDDEN_ACCESS_RESPONSE);
     }
@@ -36,7 +36,7 @@ exports.createInvoice = async (req, res, next) => {
     }
 
     /* WRISTBAND_TOUCHPOINT - RESOURCE API */
-    const existingCompany = await apitopiaService.getTenant(companyId, bearerToken(req));
+    const existingCompany = await wristbandService.getTenant(companyId, bearerToken(req));
     if (!existingCompany) {
       return res.status(400).json({ code: INVALID_REQUEST, message: 'Company could not be found.' });
     }
@@ -69,7 +69,7 @@ exports.updateInvoice = async (req, res, next) => {
   try {
     /* WRISTBAND_TOUCHPOINT - AUTHORIZATION */
     // Ensure the user has permission to write invoice data
-    const currentPermissions = await apitopiaService.getPermissionInfo(requiredPermissions, bearerToken(req));
+    const currentPermissions = await wristbandService.getPermissionInfo(requiredPermissions, bearerToken(req));
     if (!hasAccessToApi(requiredPermissions, currentPermissions)) {
       return res.status(403).json(FORBIDDEN_ACCESS_RESPONSE);
     }
@@ -102,7 +102,7 @@ exports.getInvoicesByCompany = async (req, res, next) => {
   try {
     /* WRISTBAND_TOUCHPOINT - AUTHORIZATION */
     // Ensure the user has permission to read invoice data
-    const currentPermissions = await apitopiaService.getPermissionInfo(requiredPermissions, bearerToken(req));
+    const currentPermissions = await wristbandService.getPermissionInfo(requiredPermissions, bearerToken(req));
     if (!hasAccessToApi(requiredPermissions, currentPermissions) || companyId !== tenantId) {
       return res.status(403).json(FORBIDDEN_ACCESS_RESPONSE);
     }

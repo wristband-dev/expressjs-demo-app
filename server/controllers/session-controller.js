@@ -1,9 +1,9 @@
 'use strict';
 
-const apitopiaService = require('../services/wristband-service');
+const wristbandService = require('../services/wristband-service');
 const { bearerToken } = require('../utils/util');
 
-const APITOPIA_IDP_NAME = 'apitopia';
+const WRISTBAND_IDP_NAME = 'wristband';
 
 exports.sessionData = async (req, res, next) => {
   const { identityProviderName, tenantId, userId } = req.session;
@@ -11,12 +11,12 @@ exports.sessionData = async (req, res, next) => {
   try {
     /* WRISTBAND_TOUCHPOINT - RESOURCE API */
     const [user, assignedRole, idp, pwPolicy, userSchema, company] = await Promise.all([
-      apitopiaService.getUser(userId, bearerToken(req)),
-      apitopiaService.getAssignedRole(userId, bearerToken(req)),
-      apitopiaService.getIdentityProviderByNameForTenant(tenantId, identityProviderName, bearerToken(req)),
-      apitopiaService.getPasswordPolicyForTenant(tenantId, bearerToken(req)),
-      apitopiaService.getUserSchemaForTenant(tenantId, bearerToken(req)),
-      apitopiaService.getTenant(tenantId, bearerToken(req)),
+      wristbandService.getUser(userId, bearerToken(req)),
+      wristbandService.getAssignedRole(userId, bearerToken(req)),
+      wristbandService.getIdentityProviderByNameForTenant(tenantId, identityProviderName, bearerToken(req)),
+      wristbandService.getPasswordPolicyForTenant(tenantId, bearerToken(req)),
+      wristbandService.getUserSchemaForTenant(tenantId, bearerToken(req)),
+      wristbandService.getTenant(tenantId, bearerToken(req)),
     ]);
 
     if (user.status !== 'ACTIVE' || !assignedRole) {
@@ -27,15 +27,15 @@ exports.sessionData = async (req, res, next) => {
       return override.item;
     })[0].minimumLength;
     const requiredFields = userSchema.items[0].item.baseProfile.required;
-    const isApitopiaIdp = identityProviderName === APITOPIA_IDP_NAME;
+    const isWristbandIdp = identityProviderName === WRISTBAND_IDP_NAME;
 
     return res.status(200).json({
       user,
       assignedRole,
       company,
       configs: {
-        usernameRequired: isApitopiaIdp && idp.loginIdentifiers.includes('USERNAME'),
-        passwordRequired: isApitopiaIdp && idp.loginFactors.includes('PASSWORD'),
+        usernameRequired: isWristbandIdp && idp.loginIdentifiers.includes('USERNAME'),
+        passwordRequired: isWristbandIdp && idp.loginFactors.includes('PASSWORD'),
         passwordMinLength,
         requiredFields,
       },
@@ -50,7 +50,7 @@ exports.userinfo = async (req, res, next) => {
 
   try {
     /* WRISTBAND_TOUCHPOINT - RESOURCE API */
-    const user = await apitopiaService.getUser(userId, bearerToken(req));
+    const user = await wristbandService.getUser(userId, bearerToken(req));
     return res.status(200).json(user);
   } catch (error) {
     return next(error);
@@ -62,7 +62,7 @@ exports.roleInfo = async (req, res, next) => {
 
   try {
     /* WRISTBAND_TOUCHPOINT - RESOURCE API */
-    const assignedRole = await apitopiaService.getAssignedRole(userId, bearerToken(req));
+    const assignedRole = await wristbandService.getAssignedRole(userId, bearerToken(req));
     return res.status(200).json(assignedRole);
   } catch (error) {
     return next(error);
@@ -74,7 +74,7 @@ exports.companyInfo = async (req, res, next) => {
 
   try {
     /* WRISTBAND_TOUCHPOINT - RESOURCE API */
-    const company = await apitopiaService.getTenant(tenantId, bearerToken(req));
+    const company = await wristbandService.getTenant(tenantId, bearerToken(req));
     return res.status(200).json(company);
   } catch (error) {
     return next(error);
@@ -86,21 +86,21 @@ exports.sessionConfigs = async (req, res, next) => {
 
   try {
     /* WRISTBAND_TOUCHPOINT - RESOURCE API */
-    const [apitopiaIdp, pwPolicy, userSchema] = await Promise.all([
-      apitopiaService.getIdentityProviderByNameForTenant(tenantId, identityProviderName, bearerToken(req)),
-      apitopiaService.getPasswordPolicyForTenant(tenantId, bearerToken(req)),
-      apitopiaService.getUserSchemaForTenant(tenantId, bearerToken(req)),
+    const [wristbandIdp, pwPolicy, userSchema] = await Promise.all([
+      wristbandService.getIdentityProviderByNameForTenant(tenantId, identityProviderName, bearerToken(req)),
+      wristbandService.getPasswordPolicyForTenant(tenantId, bearerToken(req)),
+      wristbandService.getUserSchemaForTenant(tenantId, bearerToken(req)),
     ]);
 
     const passwordMinLength = pwPolicy.items.map((override) => {
       return override.item;
     })[0].minimumLength;
     const requiredFields = userSchema.items[0].item.baseProfile.required;
-    const isApitopiaIdp = identityProviderName === APITOPIA_IDP_NAME;
+    const isWristbandIdp = identityProviderName === WRISTBAND_IDP_NAME;
 
     return res.status(200).json({
-      usernameRequired: isApitopiaIdp && apitopiaIdp.loginIdentifiers.includes('USERNAME'),
-      passwordRequired: isApitopiaIdp && apitopiaIdp.loginFactors.includes('PASSWORD'),
+      usernameRequired: isWristbandIdp && wristbandIdp.loginIdentifiers.includes('USERNAME'),
+      passwordRequired: isWristbandIdp && wristbandIdp.loginFactors.includes('PASSWORD'),
       passwordMinLength,
       requiredFields,
     });
@@ -114,7 +114,7 @@ exports.getAssignableRoleOptions = async (req, res, next) => {
 
   try {
     /* WRISTBAND_TOUCHPOINT - RESOURCE API */
-    const assignableRoleOptions = await apitopiaService.getAssignableRoleOptions(tenantId, bearerToken(req));
+    const assignableRoleOptions = await wristbandService.getAssignableRoleOptions(tenantId, bearerToken(req));
     return res.status(200).json({ assignableRoleOptions });
   } catch (error) {
     return next(error);

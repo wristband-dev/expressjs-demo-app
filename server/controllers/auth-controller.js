@@ -3,7 +3,13 @@
 const Iron = require('@hapi/iron');
 
 const wristbandService = require('../services/wristband-service');
-const { APPLICATION_LOGIN_URL, AUTH_CALLBACK_URL, INVOTASTIC_HOST, IS_LOCALHOST } = require('../utils/constants');
+const {
+  APPLICATION_LOGIN_URL,
+  AUTH_CALLBACK_URL,
+  INVOTASTIC_HOST,
+  IS_LOCALHOST,
+  LOGIN_STATE_COOKIE_SECRET,
+} = require('../utils/constants');
 const {
   clearSessionCookies,
   createCodeChallenge,
@@ -17,8 +23,6 @@ const {
   updateCsrfTokenAndCookie,
   updateLoginStateCookie,
 } = require('../utils/util');
-
-const { APPLICATION_DOMAIN, CLIENT_ID, LOGIN_STATE_COOKIE_SECRET } = process.env;
 
 exports.authState = async (req, res) => {
   const { session } = req;
@@ -57,12 +61,12 @@ exports.login = async (req, res, next) => {
   const loginStateData = { state, tenantDomainName, codeVerifier, returnUrl };
 
   try {
-    // Store this auth request in a cookie for later when Apitopia redirects to the callback endpoint.
+    // Store this auth request in a cookie for later when Wristband redirects to the callback endpoint.
     const sealedLoginStateData = await Iron.seal(loginStateData, LOGIN_STATE_COOKIE_SECRET, Iron.defaults);
     updateLoginStateCookie(req, res, state, sealedLoginStateData);
 
     const query = toQueryString({
-      client_id: CLIENT_ID,
+      client_id: process.env.CLIENT_ID,
       response_type: 'code',
       redirect_uri: AUTH_CALLBACK_URL,
       state,
@@ -74,8 +78,11 @@ exports.login = async (req, res, next) => {
     });
 
     /* WRISTBAND_TOUCHPOINT - AUTHENTICATION */
-    // Redirect out to the Apitopia authorize endpoint to start the login process via OAuth2 Auth Code flow.
-    return res.redirect(`http://${tenantDomainName}-${APPLICATION_DOMAIN}/api/v1/oauth2/authorize?${query}`);
+    // Redirect out to the Wristband authorize endpoint to start the login process via OAuth2 Auth Code flow.
+    // return res.redirect(`http://${tenantDomainName}-${process.env.APPLICATION_DOMAIN}/api/v1/oauth2/authorize?${query}`);
+    return res.redirect(
+      `http://${tenantDomainName}.${process.env.APPLICATION_DOMAIN}/api/v1/oauth2/authorize?${query}`
+    );
   } catch (err) {
     console.error(err);
     return next(err);
@@ -174,6 +181,9 @@ exports.logout = async (req, res) => {
   }
 
   /* WRISTBAND_TOUCHPOINT - AUTHENTICATION */
-  // Always perform logout redirect to the Apitopia logout endpoint.
-  return res.redirect(`http://${tenantDomainName}-${APPLICATION_DOMAIN}/api/v1/logout?client_id=${CLIENT_ID}`);
+  // Always perform logout redirect to the Wristband logout endpoint.
+  // return res.redirect(`http://${tenantDomainName}-${process.env.APPLICATION_DOMAIN}/api/v1/logout?client_id=${process.env.CLIENT_ID}`);
+  return res.redirect(
+    `http://${tenantDomainName}.${process.env.APPLICATION_DOMAIN}/api/v1/logout?client_id=${process.env.CLIENT_ID}`
+  );
 };

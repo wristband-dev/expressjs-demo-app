@@ -4,6 +4,8 @@ const axios = require('axios');
 const Agent = require('agentkeepalive');
 const https = require('node:https');
 
+const { TRUST_SELF_SIGNED_CERT } = require('../utils/constants');
+
 const JSON_MEDIA_TYPE = 'application/json;charset=UTF-8';
 
 const apiClient = axios.create({
@@ -15,7 +17,7 @@ const apiClient = axios.create({
     freeSocketTimeout: 30000,
   }),
   httpsAgent: new https.Agent({
-    rejectUnauthorized: !process.env.TRUST_SELF_SIGNED_CERT,
+    rejectUnauthorized: !TRUST_SELF_SIGNED_CERT,
   }),
   headers: { 'Content-Type': JSON_MEDIA_TYPE, Accept: JSON_MEDIA_TYPE },
   maxRedirects: 0,
