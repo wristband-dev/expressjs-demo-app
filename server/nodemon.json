@@ -3,7 +3,7 @@
     "NODE_ENV": "development",
     "PORT": 3001
   },
-  "exec": "node -r dotenv/config index.js",
+  "exec": "node --inspect=localhost:9229 -r dotenv/config index.js",
   "ignore": [".vscode", ".git", "build", "node_modules", "db.json"],
   "restartable": "rs",
   "verbose": true

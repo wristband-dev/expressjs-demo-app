@@ -2,7 +2,7 @@
 
 const retry = require('async-retry');
 
-const apitopiaService = require('../services/wristband-service');
+const wristbandService = require('../services/wristband-service');
 const { isAccessTokenExpired, setSessionTokenData } = require('../utils/util');
 
 // Middleware that ensures there is an authenticated user session and JWTs are present.
@@ -21,7 +21,7 @@ const accessTokenHandler = async function (req, res, next) {
     await retry(
       async () => {
         /* WRISTBAND_TOUCHPOINT - AUTHENTICATION */
-        const tokenData = apitopiaService.refreshAccessToken(refreshToken);
+        const tokenData = wristbandService.refreshAccessToken(refreshToken);
         setSessionTokenData(req, tokenData);
       },
       { retries: 2, minTimeout: 1000, maxTimeout: 1000 }

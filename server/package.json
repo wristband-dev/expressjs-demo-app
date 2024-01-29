@@ -5,8 +5,8 @@
   "version": "0.1.0",
   "private": true,
   "engines": {
-    "node": ">=16.13.1",
-    "npm": ">=8.1.2"
+    "node": ">=20.11.0",
+    "npm": ">=10.2.4"
   },
   "main": "index.js",
   "scripts": {
@@ -27,7 +27,7 @@
     "dotenv": "^16.0.3",
     "express": "^4.16.4",
     "express-validator": "^6.15.0",
-    "iron-session": "^6.3.1",
+    "iron-session": "^8.0.1",
     "lowdb": "^1.0.0",
     "moment": "^2.29.4",
     "nanoid": "^3.1.32",
@@ -42,7 +42,7 @@
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^4.2.1",
-    "nodemon": "^2.0.22",
+    "nodemon": "^3.0.1",
     "prettier": "^2.8.8"
   }
 }
