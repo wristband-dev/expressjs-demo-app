@@ -21,7 +21,7 @@ exports.LOGIN_STATE_COOKIE_SECRET = '7ffdbecc-ab7d-4134-9307-2dfcc52f7475';
 exports.NOT_FOUND = 'Not found.';
 exports.SESSION_COOKIE_NAME = 'sid';
 exports.SESSION_COOKIE_SECRET = '96bf13d5-b5c1-463a-812c-0d8db87c0ec5';
-exports.TRUST_SELF_SIGNED_CERT = true;
+exports.TRUST_SELF_SIGNED_CERT = false;
 
 exports.InvoiceTerms = Object.freeze({
   DUE_ON_RECEIPT: 'DUE_ON_RECEIPT',
