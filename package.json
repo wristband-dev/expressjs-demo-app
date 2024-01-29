@@ -5,8 +5,8 @@
   "version": "0.1.0",
   "private": true,
   "engines": {
-    "node": ">=16.13.1",
-    "npm": ">=8.1.2"
+    "node": ">=18.12.1",
+    "npm": ">=8.19.2"
   },
   "scripts": {
     "clean": "rm -rf client/dist/; rm -rf server/dist/; rm -rf client/node_modules/; rm -rf server/node_modules/",

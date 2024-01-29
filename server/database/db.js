@@ -2,7 +2,7 @@
 
 const lowDb = require('lowdb');
 const FileSync = require('lowdb/adapters/FileSync');
-const { nanoid } = require('nanoid');
+const { randomBytes } = require('node:crypto');
 
 const INVOICES_SCHEMA = 'invoices';
 const DATABASE_FILE = 'db.json';
@@ -20,7 +20,8 @@ exports.getInvoice = function (invoiceId) {
 };
 
 exports.createInvoice = function (newInvoice) {
-  const invoiceWithId = { id: nanoid(), ...newInvoice };
+  const id = randomBytes(8).toString('hex');
+  const invoiceWithId = { id, ...newInvoice };
   db.get(INVOICES_SCHEMA).push(invoiceWithId).write();
   return invoiceWithId;
 };
