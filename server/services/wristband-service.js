@@ -4,11 +4,6 @@
 // The Wristband Service contains all code for REST API calls to the Wristband platform.
 
 const apiClient = require('../client/api-client');
-const { BASIC_AUTH_AXIOS_CONFIG } = require('../utils/constants');
-const { createFormData } = require('../utils/util');
-
-const AUTH_CODE_GRANT_TYPE = 'authorization_code';
-const REFRESH_TOKEN_GRANT_TYPE = 'refresh_token';
 
 exports.cancelEmailChange = async function (changeEmailRequestId, requestConfig) {
   await apiClient.post('/change-email/cancel-email-change', { changeEmailRequestId }, requestConfig);
@@ -20,17 +15,6 @@ exports.cancelNewUserInvite = async function (newUserInvitationRequestId, reques
 
 exports.changePassword = async function (userId, currentPassword, newPassword, requestConfig) {
   await apiClient.post(`/change-password`, { userId, currentPassword, newPassword }, requestConfig);
-};
-
-exports.exchangeAuthCodeForTokens = async function (code, redirectUri, codeVerifier) {
-  const authData = createFormData({
-    grant_type: AUTH_CODE_GRANT_TYPE,
-    code,
-    redirect_uri: redirectUri,
-    code_verifier: codeVerifier,
-  });
-  const response = await apiClient.post('/oauth2/token', authData, BASIC_AUTH_AXIOS_CONFIG);
-  return response.data;
 };
 
 exports.getAssignableRoleOptions = async function (tenantId, requestConfig) {
@@ -64,12 +48,6 @@ exports.getNewUserInviteRequestsForTenant = async function (tenantId, requestCon
   const statusFilter = `?query=${encodeURIComponent(`status eq "PENDING_INVITE_ACCEPTANCE"`)}`;
   const path = `/tenants/${tenantId}/new-user-invitation-requests${statusFilter}`;
   const response = await apiClient.get(path, requestConfig);
-  return response.data;
-};
-
-exports.getOauth2Userinfo = async function (accessToken) {
-  const requestConfig = { headers: { Authorization: `Bearer ${accessToken}` } };
-  const response = await apiClient.get('/oauth2/userinfo', requestConfig);
   return response.data;
 };
 
@@ -122,18 +100,8 @@ exports.inviteNewUser = async function (tenantId, email, roleId, requestConfig) 
   await apiClient.post(`/new-user-invitation/invite-user`, inviteData, requestConfig);
 };
 
-exports.refreshAccessToken = async function (refreshToken) {
-  const authData = { grant_type: REFRESH_TOKEN_GRANT_TYPE, refresh_token: refreshToken };
-  const response = await apiClient.post('/oauth2/token', createFormData(authData), BASIC_AUTH_AXIOS_CONFIG);
-  return response.data;
-};
-
 exports.requestEmailChange = async function (userId, newEmail, requestConfig) {
   await apiClient.post('/change-email/request-email-change', { userId, newEmail }, requestConfig);
-};
-
-exports.revokeRefreshToken = async function (token) {
-  await apiClient.post(`/oauth2/revoke`, createFormData({ token }), BASIC_AUTH_AXIOS_CONFIG);
 };
 
 exports.updateTenant = async function (tenantId, tenantData, requestConfig) {

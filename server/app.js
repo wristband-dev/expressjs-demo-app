@@ -2,7 +2,6 @@
 
 const express = require('express');
 const cookieParser = require('cookie-parser');
-const moment = require('moment');
 const path = require('path');
 
 const ironSession = require('./middleware/init-iron-session');
@@ -17,21 +16,22 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // 30 minute cookie-based session
-const session = ironSession({
-  cookieName: SESSION_COOKIE_NAME,
-  password: SESSION_COOKIE_SECRET,
-  cookieOptions: {
-    httpOnly: true,
-    // NOTE: Have to add 60s to counter Iron Session's max age logic.
-    maxAge: moment.duration(1800, 'seconds').asSeconds() + 60,
-    path: '/',
-    sameSite: true,
-    secure: false,
-  },
-});
+app.use(
+  ironSession({
+    cookieName: SESSION_COOKIE_NAME,
+    password: SESSION_COOKIE_SECRET,
+    cookieOptions: {
+      httpOnly: true,
+      maxAge: 1800,
+      path: '/',
+      sameSite: true,
+      secure: false,
+    },
+  })
+);
 
 // Defined routes for all API endpoint/non-static assets
-app.use('/api', session, routes);
+app.use('/api', routes);
 
 // Serve static assets if in production mode.
 if (process.env.NODE_ENV === 'production') {
