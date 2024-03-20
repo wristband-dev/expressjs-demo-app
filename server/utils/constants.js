@@ -1,27 +1,17 @@
 'use strict';
 
-exports.IS_LOCALHOST = process.env.DOMAIN_FORMAT === 'LOCALHOST';
-exports.INVOTASTIC_HOST = this.IS_LOCALHOST ? 'localhost:6001' : 'business.invotastic.com:6001';
-const authCallbackTenantDomain = this.IS_LOCALHOST ? '' : '{tenant_domain}.';
-
-exports.APPLICATION_LOGIN_URL = `https://${process.env.APPLICATION_DOMAIN}/login`;
-exports.AUTH_CALLBACK_URL = `http://${authCallbackTenantDomain}${this.INVOTASTIC_HOST}/api/auth/callback`;
-exports.BASIC_AUTH_AXIOS_CONFIG = {
-  headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-  auth: { username: process.env.CLIENT_ID, password: process.env.CLIENT_SECRET },
-};
 exports.CSRF_TOKEN_COOKIE_NAME = 'XSRF-TOKEN';
 exports.FORBIDDEN_ACCESS_RESPONSE = { code: 'Access denied.', message: 'Forbidden access.' };
 exports.INVALID_PHONE_NUMBER = 'Invalid phone number provided.';
 exports.INVALID_REQUEST = 'Invalid request.';
 exports.INVOICE_READ_PERM = 'invoice:read';
 exports.INVOICE_WRITE_PERM = 'invoice:write';
-exports.LOGIN_STATE_COOKIE_PREFIX = 'login:';
-exports.LOGIN_STATE_COOKIE_SECRET = '7ffdbecc-ab7d-4134-9307-2dfcc52f7475';
+exports.INVOTASTIC_HOST = process.env.DOMAIN_FORMAT === 'LOCALHOST' ? 'localhost:6001' : 'business.invotastic.com:6001';
 exports.NOT_FOUND = 'Not found.';
 exports.SESSION_COOKIE_NAME = 'sid';
 exports.SESSION_COOKIE_SECRET = '96bf13d5-b5c1-463a-812c-0d8db87c0ec5';
-exports.TRUST_SELF_SIGNED_CERT = false;
+exports.TRUST_SELF_SIGNED_CERT = true;
+exports.WRISTBAND_IDP_NAME = 'wristband';
 
 exports.InvoiceTerms = Object.freeze({
   DUE_ON_RECEIPT: 'DUE_ON_RECEIPT',

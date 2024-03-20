@@ -1,6 +1,23 @@
+<div align="center">
+  <a href="https://wristband.dev">
+    <picture>
+      <img src="https://assets.wristband.dev/images/email_branding_logo_v1.png" alt="Github" width="297" height="64">
+    </picture>
+  </a>
+  <p align="center">
+    Enterprise-ready auth that is secure by default, truly multi-tenant, and ungated for small businesses.
+  </p>
+</div>
+
+<br/>
+
+---
+
+<br/>
+
 # Invotastic for Business (ExpressJS) -- A multi-tenant demo app
 
-"Invotastic for Business" is a multi-tenant demo app that serves other companies as its customers. This repo utilizes a "Backend Server" OAuth2 client type. The backend server technology here is NodeJS along with the ExpressJS web application framework. NodeJS hosts and serves up a React single-page application to the browser upon request.
+"Invotastic for Business" is a multi-tenant demo app that serves other companies as its customers. This repo utilizes a "Backend Server" OAuth2 client type. The backend server technology here is NodeJS and the ExpressJS web application framework. NodeJS hosts and serves up a React single-page application to the browser upon request.
 <br>
 <br>
 
@@ -9,6 +26,100 @@
 
 <br>
 <hr />
+<br>
+
+## Getting Started
+
+You can start up the Invotastic for Business demo application in a few simple steps.
+
+### 1) Sign up for an Wristband account.
+
+First thing is first: make sure you sign up for an Wristband account at [https://wristband.dev](https://wristband.dev).
+
+### 2) Provision the B2B ExpressJS demo application in the Wristband Dashboard.
+
+After your Wristband account is set up, log in to the Wristband dashboard.  Once you land on the home page of the dashboard, click the button labelled "Add Demo App".  Make sure you choose the following options:
+
+- Step 1: App Type - B2B
+- Step 2: Subject to Authenticate - Humans
+- Step 3: Client Framework - Express
+- Step 4: Domain Format  - Choosing `Localhost` is fastest to setup. You can alternatively choose `Vanity Domain` if you want a production-like experience on your local machine for tenant-specific vanity domains, but this method will require additional setup.
+
+### 3) Apply your Wristband configuration values to the NodeJS server configuration
+
+Upon completing the demo application setup, you will be prompted with values that you should copy into the environment variable configuration for this demo repository, which is located in `server/.env`.  Replace the following values:
+
+- `APPLICATION_DOMAIN`
+- `DOMAIN_FORMAT`
+- `CLIENT_ID`
+- `CLIENT_SECRET`
+
+### 4) Run the application in "production" mode 
+
+> [!WARNING]
+> Make sure you are in the root directory of this repository.
+
+#### Install dependencies
+
+Now install all dependencies for both the React client application and the NodeJS server:
+
+```npm run install-all```
+
+#### Build the client application bundle
+
+Next, build the React asset bundle that will be served up by NodeJS (asset bundle target location is `server/dist/`):
+
+```npm run build```
+
+#### Run the NodeJS server
+
+Start up the NodeJS server in "production" mode. This lets NodeJS serve the React bundle as static content from the NodeJS server.  The NodeJS server runs on port `6001`.
+
+```npm start```
+
+<br>
+<hr>
+<br>
+
+## How to interact with Invotastic for Business
+
+### Signup Invotastic Users
+
+Now that Invotastic for Business is up and running, you can sign up your first customer on the Invotastic for Business Signup Page at the following location:
+
+- `http://{application_vanity_domain}/signup`, where `{application_vanity_domain}` should be replaced with the value of the "Application Vanity Domain" value of the Invotastic for Business application (can be found in the Wristband Dashboard by clicking the Application Details side menu of this app).
+
+This signup page is hosted by Wristband.  Completing the signup form will provision both a new tenant with the specified tenant domain name and a new user that is assigned to that tenant.
+
+### Invotastic Home Page
+
+For reference, the home page of this Inovtastic for Business app can be accessed at the following locations:
+
+- Localhost domain format: [http://localhost:6001/home](http://localhost:6001/home)
+- Vanity domain format: [http://{tenant_domain}.business.invotastic.com:6001/home](http://{tenant_domain}.business.invotastic.com:6001/home), where `{tenant_domain}` should be replaced with the value of the desired tenant's domain name.
+
+### Invotastic Application-level Login (Tenant Discovery)
+
+Users of Invotastic for Business can access the Invotastic for Business Application-level Login Page at the following location:
+
+- `http://{application_vanity_domain}/login`, where `{application_vanity_domain}` should be replaced with the value of the "Application Vanity Domain" value of the Invotastic for Business application (can be found in the Wristband Dashboard by clicking the Application Details side menu of this app).
+
+This login page is hosted by Wristband.  Here, the user will be prompted to enter their tenant's domain name for which they want to log in to.  Successfully entering the tenant domain name will redirect the user to the tenant-level login page for their specific tenant.
+
+Users also have the option here to execute the Forgot Tenant workflow and entering their email address in order to receive a list of all tenants that they belong to.
+
+### Invotastic Tenant-level Login
+
+If users wish to directly access the Invotastic Tenant-level Login Page without having to go through the application-level login, they can do so at the following locations:
+
+- Localhost domain format: [http://localhost:6001/api/auth/login?tenant_domain={tenant_domain}](http://localhost:6001/home), where `{tenant_domain}` should be replaced with the value of the desired tenant's domain name.
+- Vanity domain format: [http://{tenant_domain}.business.invotastic.com:6001/api/auth/login](http://{tenant_domain}.business.invotastic.com:6001/api/auth/login), where `{tenant_domain}` should be replaced with the value of the desired tenant's domain name.
+
+This login page is hosted by Wristband.  Here, the user will be prompted to enter their credentials in order to login to the application.
+
+<br>
+<hr>
+<br>
 
 ## Demo App Overview
 
@@ -78,94 +189,13 @@ Submitting the form to invite another admin into your company will ultimately tr
 
 <br>
 <hr />
+<br/>
 
-## Getting Started
-
-You can start up the Invotastic for Business demo application in a few simple steps.
-
-### Sign up for an Wristband account.
-
-First thing is first: make sure you sign up for an Wristband account at [https://wristband.dev](https://wristband.dev).
-
-### Provision the B2B ExpressJS demo application in the Wristband Dashboard.
-
-After your Wristband account is set up, log in to the Wristband dashboard.  Once you land on the home page of the dashboard, click the button labelled "Add Demo App".  Make sure you choose the following options:
-
-- Step 1: App Type - B2B
-- Step 2: Client Framework - Express
-- Step 3: Domain Format  - Choosing `Localhost` is fastest to setup. You can alternatively choose `Vanity Domain` if you want a production-like experience on your local machine for tenant-specific vanity domains, but this method will require additional setup.
-
-### Apply your Wristband configuration values to the NodeJS server configuration
-
-Upon completing the demo application setup, you will be prompted with values that you should copy into the environment variable configuration for this demo repository, which is located in `server/.env`.  Replace the following values:
-
-- `APPLICATION_DOMAIN`
-- `DOMAIN_FORMAT`
-- `CLIENT_ID`
-- `CLIENT_SECRET`
-
-### Run the application in "production" mode 
-
-Make sure you are in the root directory of this repository. 
-#### Install dependencies
-
-Now install all dependencies for both the React client application and the NodeJS server:
-
-```npm run install-all```
-
-#### Build the client application bundle
-
-Next, build the React asset bundle that will be served up by NodeJS (asset bundle target location is `server/dist/`):
-
-```npm run build```
-
-#### Run the NodeJS server
-
-Start up the NodeJS server in "production" mode. This lets NodeJS serve the React bundle as static content from the NodeJS server.  The NodeJS server runs on port `6001`.
-
-```npm start```
-
-### How to interact with Invotastic for Business
-
-#### Signup Invotastic Users
-
-Now that Invotastic for Business is up and running, you can sign up your first customer on the Invotastic for Business Signup Page at the following location:
-
-- `http://{application_vanity_domain}/signup`, where `{application_vanity_domain}` should be replaced with the value of the "Application Vanity Domain" value of the Invotastic for Business application (can be found in the Wristband Dashboard by clicking the Application Details side menu of this app).
-
-This signup page is hosted by Wristband.  Completing the signup form will provision both a new tenant with the specified tenant domain name and a new user that is assigned to that tenant.
-
-#### Invotastic Home Page
-
-For reference, the home page of this Inovtastic for Business app can be accessed at the following locations:
-
-- Localhost domain format: [http://localhost:6001/home](http://localhost:6001/home)
-- Vanity domain format: [http://{tenant_domain}.business.invotastic.com:6001/home](http://{tenant_domain}.business.invotastic.com:6001/home), where `{tenant_domain}` should be replaced with the value of the desired tenant's domain name.
-
-#### Invotastic Application-level Login
-
-Users of Invotastic for Business can access the Invotastic for Business Application-level Login Page at the following location:
-
-- `http://{application_vanity_domain}/login`, where `{application_vanity_domain}` should be replaced with the value of the "Application Vanity Domain" value of the Invotastic for Business application (can be found in the Wristband Dashboard by clicking the Application Details side menu of this app).
-
-This login page is hosted by Wristband.  Here, the user will be prompted to enter their tenant's domain name for which they want to log in to.  Successfully entering the tenant domain name will redirect the user to the tenant-level login page for their specific tenant.
-
-Users also have the option here to execute the Forgot Tenant workflow and entering their email address in order to receive a list of all tenants that they belong to.
-
-#### Invotastic Tenant-level Login
-
-If users wish to directly access the Invotastic Tenant-level Login Page without having to go through the application-level login, they can do so at the following locations:
-
-- Localhost domain format: [http://localhost:6001/api/auth/login?tenant_domain={tenant_domain}](http://localhost:6001/home), where `{tenant_domain}` should be replaced with the value of the desired tenant's domain name.
-- Vanity domain format: [http://{tenant_domain}.business.invotastic.com:6001/api/auth/login](http://{tenant_domain}.business.invotastic.com:6001/api/auth/login), where `{tenant_domain}` should be replaced with the value of the desired tenant's domain name.
-
-This login page is hosted by Wristband.  Here, the user will be prompted to enter their credentials in order to login to the application.
-
-### Run the application in "dev" mode to experiment with the code and debug
+## Run the application in "dev" mode to experiment with the code and debug
 
 You can run this demo application in "dev" mode in order to actively debug or experiment with any of the code.  This will require starting up the React client application in a separate CLI from the NodeJS server.  All API calls made from React to NodeJS are configured to be proxied in order to avoid CORS issues.
 
-In one CLI, change to the `client` directory and run the following to start Create React App's Webpack dev server (runs on port `6001`):
+In one CLI, change to the `client` directory and run the following to start the Vite dev server (runs on port `6001`):
 
 ```npm start```
 
@@ -175,19 +205,45 @@ In a second separate CLI, change to the `server` directory and run the following
 
 All Invotastic URL locations should remain the same as when using the app in "production" mode.
 
-### Setting up a local DNS when using vanity domain for the domain format
-##### *<em>**Under Construction**</em>
+<br>
+<hr />
 <br/>
+
+## Setting up a local DNS when using `VANITY_DOMAIN` for the domain format
 
 If you choose to use vanity domains as the domain format for the demo application, you will need to install a local DNS server to provide custom configurations.  This configuration forces any requests made to domains ending with `.business.invotastic.com` to get routed to your localhost.  This configuration is necessary since all vanity domains that get generated when running the demo application locally will have a domain suffix of  `*.business.invotastic.com`. Therefore, the above setting will force those domains to resolve back to your local machine instead of attempting to route them out to the web.
 
 The goal is the following mapping:
 `business.invotastic.com` => `127.0.0.1`.
 
-
-Here are some options which you can use, depending on your operating system:
+Here are some options:
 
 - Mac / Linux: [dnsmasq](http://mayakron.altervista.org/support/acrylic/Home.htm)
 - Windows: [Acrylic](http://mayakron.altervista.org/support/acrylic/Home.htm)
 
-More to setup-specific instructions to come...
+<br>
+
+## Wristband Express SDK
+
+This demo app is leveraging the [Wristband express-auth SDK](https://github.com/wristband-dev/express-auth) for all authentication interaction in the NodeJS server. Refer to that GitHub repository for more information.
+
+<br/>
+
+## CSRF Protection
+
+Cross-Site Request Forgery (CSRF) is a security vulnerability where attackers exploit a user's authenticated session to perform unauthorized actions on a web application without their knowledge or consent. This demo app is leveraging a technique called the Double Cookie Submit Pattern to mitigate CSRF attacks by employing two cookies: a session cookie for user authentication and a CSRF token cookie containing a unique token. With each request, the CSRF token is included both in the cookie and the request payload, enabling server-side validation to prevent CSRF attacks.
+
+Refer to the [OWASP CSRF Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html) for more information about this topic.
+
+> [!WARNING]
+> Your own application should take effort to mitigate CSRF attacks in addition to any Wristband authentication, and it is highly recommended to take a similar approach as this demo app to protect against thse types of attacks.
+
+Within the demo app code base, you can search in your IDE of choice for the text `CSRF_TOUCHPOINT`.  This will show the various places in both the React frontend code and NodeJS backend code where CSRF is involved.
+
+<br/>
+
+## Questions
+
+Reach out to the Wristband team at <support@wristband.dev> for any questions regarding this demo app.
+
+<br/>

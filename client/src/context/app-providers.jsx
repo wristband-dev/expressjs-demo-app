@@ -15,7 +15,6 @@ const queryClient = new QueryClient({
       refetchOnWindowFocus: false,
       retry: (count, { response }) => {
         if (['401', '403'].includes(response.status)) {
-          console.log('FALSE');
           return false;
         }
         return count < 3;
