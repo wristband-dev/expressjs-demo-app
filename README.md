@@ -7,6 +7,12 @@
   <p align="center">
     Enterprise-ready auth that is secure by default, truly multi-tenant, and ungated for small businesses.
   </p>
+  <p align="center">
+    <b>
+      <a href="https://wristband.dev">Website</a> •
+      <a href="https://wristband.stoplight.io/docs/documentation">Documentation</a>
+    </b>
+  </p>
 </div>
 
 <br/>

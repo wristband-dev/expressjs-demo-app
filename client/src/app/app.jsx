@@ -2,7 +2,7 @@ import React from 'react';
 import { Navigate, Routes, Route } from 'react-router-dom';
 
 import { FullScreenSpinner, Navbar, NewCompanyDialog } from 'components';
-import { useAuthState } from 'context';
+import { useAuth } from 'context';
 import { sessionHooks } from 'hooks';
 import { HomePage, SettingsPage } from 'pages';
 
@@ -36,6 +36,6 @@ function AuthenticatedApp() {
 
 export function App() {
   /* WRISTBAND_TOUCHPOINT - AUTHENTICATION */
-  const { isAuthenticated } = useAuthState();
+  const { isAuthenticated } = useAuth();
   return isAuthenticated ? <AuthenticatedApp /> : <UnauthenticatedApp />;
 }
