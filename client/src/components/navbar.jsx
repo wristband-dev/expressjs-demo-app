@@ -7,6 +7,10 @@ import SettingsIcon from '@mui/icons-material/Settings';
 
 import { TouchpointBadge, SideDrawer } from 'components';
 import { Logo } from 'images';
+import { Person } from '@mui/icons-material';
+
+import { sessionHooks } from 'hooks';
+import { constants } from 'utils';
 
 const linkStyle = ({ theme }) => {
   return {
@@ -34,6 +38,7 @@ const StyledRouterLink = styled(Link)(linkStyle);
 export function Navbar() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const { data: role } = sessionHooks.useSessionRole();
 
   return (
     <AppBar position="sticky">
@@ -55,6 +60,14 @@ export function Navbar() {
                 <HomeIcon />
                 <Typography>Home</Typography>
               </StyledRouterLink>
+              
+              {/* WRISTBAND_TOUCHPOINT - AUTHORIZATION */}
+              {role.name === constants.OWNER_ROLE && (
+                <StyledRouterLink to="/admin">
+                  <Person />
+                  <Typography>Admin</Typography>
+                </StyledRouterLink>
+              )}
               <StyledRouterLink to="/settings">
                 <SettingsIcon />
                 <Typography>Settings</Typography>
