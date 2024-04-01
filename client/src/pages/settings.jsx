@@ -3,15 +3,12 @@ import { Grid, Typography } from '@mui/material';
 import {
   AccountSettingsForm,
   TouchpointChip,
-  // CompanySettingsForm,
   CustomDivider,
-  // InviteUserForm,
   ProfileSettingsForm,
 } from 'components';
 import { sessionHooks } from 'hooks';
 
 export function SettingsPage() {
-  // const { data: role } = sessionHooks.useSessionRole();
   const { data: sessionConfigs, error, isInitialLoading } = sessionHooks.useSessionConfigs();
 
   if (isInitialLoading) {
@@ -22,7 +19,6 @@ export function SettingsPage() {
     return 'An error has occurred retrieving your session configs: ' + error.message;
   }
 
-  // Does xs={12} need to be changed?
   return (
     <Grid container maxWidth={1200} marginX="auto">
       <Grid item xs={12} marginTop="2rem" textAlign="center">
