@@ -2,6 +2,7 @@ import axios from 'axios';
 
 import { util } from 'utils';
 
+/* CSRF_TOUCHPOINT */
 const apiClient = axios.create({
   baseURL: `${window.location.origin}/api`,
   headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
