@@ -15,10 +15,10 @@ function UnauthenticatedApp() {
 }
 
 function AuthenticatedApp() {
+  const { data: role } = sessionHooks.useSessionRole();
   const { data: company } = sessionHooks.useSessionCompany();
   const { id, invoiceEmail } = company;
   const companyIsComplete = !!invoiceEmail;
-  const { data: role } = sessionHooks.useSessionRole();
 
   return (
     <>
@@ -28,9 +28,7 @@ function AuthenticatedApp() {
         <Routes>
           <Route path="/home" element={<HomePage />} />
           {/* WRISTBAND_TOUCHPOINT - AUTHORIZATION */}
-          {role.name === constants.OWNER_ROLE && (
-            <Route path="/admin" element={<AdminPage />} />
-          )}
+          {role.name === constants.OWNER_ROLE && <Route path="/admin" element={<AdminPage />} />}
           <Route path="/settings" element={<SettingsPage />} />
           <Route path="*" element={<Navigate replace to="/home" />} />
         </Routes>

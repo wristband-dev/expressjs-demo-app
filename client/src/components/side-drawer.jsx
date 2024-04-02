@@ -4,11 +4,10 @@ import { Divider, Drawer, IconButton, List, ListItem, ListItemText, Typography, 
 import MenuIcon from '@mui/icons-material/Menu';
 import HomeIcon from '@mui/icons-material/Home';
 import LogoutIcon from '@mui/icons-material/Logout';
+import { Person } from '@mui/icons-material';
 import SettingsIcon from '@mui/icons-material/Settings';
 
 import { TouchpointBadge } from 'components';
-import { Person } from '@mui/icons-material';
-
 import { sessionHooks } from 'hooks';
 import { constants } from 'utils';
 
@@ -60,15 +59,15 @@ export function SideDrawer() {
           {/* WRISTBAND_TOUCHPOINT - AUTHORIZATION */}
           {role.name === constants.OWNER_ROLE && (
             <>
-            <StyledListItem onClick={() => setOpenDrawer(false)}>
-              <ListItemText>
-                <StyledRouterLink to="/admin">
-                  <Person />
-                  <Typography>Admin</Typography>
-                </StyledRouterLink>
-              </ListItemText>
-            </StyledListItem>
-            <Divider />
+              <StyledListItem onClick={() => setOpenDrawer(false)}>
+                <ListItemText>
+                  <StyledRouterLink to="/admin">
+                    <Person />
+                    <Typography>Admin</Typography>
+                  </StyledRouterLink>
+                </ListItemText>
+              </StyledListItem>
+              <Divider />
             </>
           )}
 

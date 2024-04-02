@@ -1,5 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Container, FormControl, InputLabel, MenuItem, Select, TextField, Typography, Box } from '@mui/material';
+import {
+  Button,
+  Container,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+  Typography,
+  Box,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
 
 import { settingsHooks } from 'hooks';
 
@@ -16,6 +28,9 @@ export function InviteUserForm() {
   const { items, totalResults } = invites;
   const hasExistingInvite = totalResults > 0;
 
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
   useEffect(() => {
     if (!!assignableRoleOptions.length && !assignedRole) {
       setAssignedRole(assignableRoleOptions[0].value);
@@ -23,12 +38,15 @@ export function InviteUserForm() {
   }, [assignableRoleOptions, assignableRoleOptions.length, assignedRole]);
 
   const inviteUser = () => {
-    createNewUserInvite({ email: adminEmail, roleId: assignedRole }, {
-      onSuccess: () => {
-        // Clear the admin email text box after the invite is successfully sent
-        setAdminEmail('');
+    createNewUserInvite(
+      { email: adminEmail, roleId: assignedRole },
+      {
+        onSuccess: () => {
+          // Clear the admin email text box after the invite is successfully sent
+          setAdminEmail('');
+        },
       }
-    });
+    );
   };
 
   const cancelInvite = (item) => {
@@ -55,9 +73,7 @@ export function InviteUserForm() {
       )}
       {!userLimitReached && (
         <>
-          <Typography margin="1rem 0">
-            Send an invite to add admins or viewers to Invotastic.
-          </Typography>
+          <Typography margin="1rem 0">Send an invite to add admins or viewers to Invotastic.</Typography>
           <FormControl variant="standard" fullWidth sx={{ margin: '0.75rem auto' }}>
             <TextField
               id="admin-email"
@@ -102,32 +118,33 @@ export function InviteUserForm() {
       )}
       {!userLimitReached && hasExistingInvite && (
         <>
-          <Typography margin="1rem 0">
-            The invitation email has been sent to:
-          </Typography>
+          <Typography margin="1rem 0">The invitation email has been sent to:</Typography>
 
           <Box sx={{ margin: '1rem 0' }}>
             {items.map((item, index) => (
-              <Box key={index} sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1rem', marginBottom: '1rem' }}>
-
+              <Box
+                key={index}
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  flexDirection: isMobile ? 'column' : 'row',
+                  gap: '1rem',
+                  marginBottom: '1rem',
+                }}
+              >
                 {/* Display the email */}
-                <Typography component="span">
+                <Typography component="span" sx={{ wordBreak: 'break-word' }}>
                   <strong>{item.email}</strong>
                 </Typography>
 
                 {/* Cancel button for the specific item */}
-                <Button 
-                  variant="contained" 
-                  color="secondary" 
-                  onClick={() => cancelInvite(index)} 
-                  disabled={isFetching}
-                >
+                <Button variant="contained" color="secondary" onClick={() => cancelInvite(index)} disabled={isFetching}>
                   CANCEL
                 </Button>
               </Box>
             ))}
           </Box>
-
         </>
       )}
     </form>

@@ -1,11 +1,7 @@
+import React from 'react';
 import { Grid, Typography } from '@mui/material';
 
-import {
-  AccountSettingsForm,
-  TouchpointChip,
-  CustomDivider,
-  ProfileSettingsForm,
-} from 'components';
+import { AccountSettingsForm, TouchpointChip, CustomDivider, ProfileSettingsForm } from 'components';
 import { sessionHooks } from 'hooks';
 
 export function SettingsPage() {

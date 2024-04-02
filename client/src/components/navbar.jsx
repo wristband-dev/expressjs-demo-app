@@ -4,10 +4,10 @@ import { AppBar, Box, Toolbar, Typography, styled, useTheme, useMediaQuery } fro
 import HomeIcon from '@mui/icons-material/Home';
 import LogoutIcon from '@mui/icons-material/Logout';
 import SettingsIcon from '@mui/icons-material/Settings';
+import { Person } from '@mui/icons-material';
 
 import { TouchpointBadge, SideDrawer } from 'components';
 import { Logo } from 'images';
-import { Person } from '@mui/icons-material';
 
 import { sessionHooks } from 'hooks';
 import { constants } from 'utils';
@@ -60,7 +60,6 @@ export function Navbar() {
                 <HomeIcon />
                 <Typography>Home</Typography>
               </StyledRouterLink>
-              
               {/* WRISTBAND_TOUCHPOINT - AUTHORIZATION */}
               {role.name === constants.OWNER_ROLE && (
                 <StyledRouterLink to="/admin">
