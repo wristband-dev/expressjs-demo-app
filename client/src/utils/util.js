@@ -1,4 +1,4 @@
-export function logout() {
+export function redirectToLogout() {
   window.location = `${window.location.origin}/api/auth/logout`;
 }
 
@@ -19,4 +19,9 @@ export function toCapitalizedCase(string) {
 
 export function isEmptyPhoneNumber(phoneNumber) {
   return !phoneNumber || phoneNumber === '+';
+}
+
+export function isOwnerRole(roleName) {
+  // Should match the Role "name" field, i.e. "app:invotasticb2b:owner"
+  return /^app:.*:owner$/.test(roleName);
 }

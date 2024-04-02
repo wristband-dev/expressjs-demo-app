@@ -62,5 +62,3 @@ export const STATES = [
   { value: 'WI', label: 'Wisconsin' },
   { value: 'WY', label: 'Wyoming' },
 ];
-
-export const OWNER_ROLE = 'app:invotasticb2b:owner';

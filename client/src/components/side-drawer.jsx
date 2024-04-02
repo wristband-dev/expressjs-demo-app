@@ -9,7 +9,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 
 import { TouchpointBadge } from 'components';
 import { sessionHooks } from 'hooks';
-import { constants } from 'utils';
+import { isOwnerRole } from 'utils/util';
 
 const linkStyle = ({ theme }) => {
   return {
@@ -57,7 +57,7 @@ export function SideDrawer() {
           </StyledListItem>
           <Divider />
           {/* WRISTBAND_TOUCHPOINT - AUTHORIZATION */}
-          {role.name === constants.OWNER_ROLE && (
+          {isOwnerRole(role.name) && (
             <>
               <StyledListItem onClick={() => setOpenDrawer(false)}>
                 <ListItemText>

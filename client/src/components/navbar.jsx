@@ -8,9 +8,8 @@ import { Person } from '@mui/icons-material';
 
 import { TouchpointBadge, SideDrawer } from 'components';
 import { Logo } from 'images';
-
 import { sessionHooks } from 'hooks';
-import { constants } from 'utils';
+import { isOwnerRole } from 'utils/util';
 
 const linkStyle = ({ theme }) => {
   return {
@@ -61,7 +60,7 @@ export function Navbar() {
                 <Typography>Home</Typography>
               </StyledRouterLink>
               {/* WRISTBAND_TOUCHPOINT - AUTHORIZATION */}
-              {role.name === constants.OWNER_ROLE && (
+              {isOwnerRole(role.name) && (
                 <StyledRouterLink to="/admin">
                   <Person />
                   <Typography>Admin</Typography>
@@ -75,6 +74,7 @@ export function Navbar() {
                 anchor={{ vertical: 'bottom', horizontal: 'left' }}
                 sxStyle={{ bottom: '-10%', fontSize: '10px', height: '1rem', left: '50%', width: '7.75rem' }}
               >
+                {/* WRISTBAND_TOUCHPOINT - AUTHENTICATION */}
                 <StyledExternalLink href={`${window.location.origin}/api/auth/logout`}>
                   <LogoutIcon />
                   <Typography>Logout</Typography>

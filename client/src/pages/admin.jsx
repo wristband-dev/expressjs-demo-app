@@ -3,7 +3,7 @@ import { Grid, Typography } from '@mui/material';
 
 import { TouchpointChip, CompanySettingsForm, CustomDivider, InviteUserForm } from 'components';
 import { sessionHooks } from 'hooks';
-import { constants } from 'utils';
+import { isOwnerRole } from 'utils/util';
 
 export function AdminPage() {
   const { data: role } = sessionHooks.useSessionRole();
@@ -18,7 +18,7 @@ export function AdminPage() {
         <Grid item xs={1} sm={2} />
         <Grid container item xs={10} sm={8}>
           {/* WRISTBAND_TOUCHPOINT - AUTHORIZATION */}
-          {role.name === constants.OWNER_ROLE && (
+          {isOwnerRole(role.name) && (
             <>
               <Grid item xs={12}>
                 <Typography fontSize="1.5rem" margin="1rem 0 0.5rem">
