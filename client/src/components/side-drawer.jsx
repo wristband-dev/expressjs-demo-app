@@ -4,9 +4,12 @@ import { Divider, Drawer, IconButton, List, ListItem, ListItemText, Typography, 
 import MenuIcon from '@mui/icons-material/Menu';
 import HomeIcon from '@mui/icons-material/Home';
 import LogoutIcon from '@mui/icons-material/Logout';
+import { Person } from '@mui/icons-material';
 import SettingsIcon from '@mui/icons-material/Settings';
 
 import { TouchpointBadge } from 'components';
+import { sessionHooks } from 'hooks';
+import { constants } from 'utils';
 
 const linkStyle = ({ theme }) => {
   return {
@@ -32,6 +35,7 @@ const StyledListItem = styled(ListItem)(({ theme }) => {
 export function SideDrawer() {
   const theme = useTheme();
   const [openDrawer, setOpenDrawer] = useState(false);
+  const { data: role } = sessionHooks.useSessionRole();
 
   return (
     <>
@@ -52,6 +56,21 @@ export function SideDrawer() {
             </ListItemText>
           </StyledListItem>
           <Divider />
+          {/* WRISTBAND_TOUCHPOINT - AUTHORIZATION */}
+          {role.name === constants.OWNER_ROLE && (
+            <>
+              <StyledListItem onClick={() => setOpenDrawer(false)}>
+                <ListItemText>
+                  <StyledRouterLink to="/admin">
+                    <Person />
+                    <Typography>Admin</Typography>
+                  </StyledRouterLink>
+                </ListItemText>
+              </StyledListItem>
+              <Divider />
+            </>
+          )}
+
           <StyledListItem onClick={() => setOpenDrawer(false)}>
             <ListItemText>
               <StyledRouterLink to="/settings">
