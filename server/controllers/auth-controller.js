@@ -41,7 +41,8 @@ exports.authCallback = async (req, res, next) => {
       await req.session.save();
 
       // Send the user back to the Invotastic application.
-      res.redirect(callbackData.returnUrl || `http://${callbackData.tenantDomainName}.${INVOTASTIC_HOST}/home`);
+      const tenantDomain = process.env.DOMAIN_FORMAT === 'VANITY_DOMAIN' ? `${callbackData.tenantDomainName}.` : '';
+      res.redirect(callbackData.returnUrl || `http://${tenantDomain}${INVOTASTIC_HOST}/home`);
     }
   } catch (err) {
     console.error(err);
