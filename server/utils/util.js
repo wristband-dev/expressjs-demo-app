@@ -16,6 +16,7 @@ exports.isCsrfTokenValid = function (req) {
 };
 
 // Set a 30 minute CSRF cookie expiration in order to match the session cookie expiration.
+// NOTE: If deploying your own app to production, do not disable secure cookies.
 exports.updateCsrfTokenAndCookie = function (req, res) {
   /* CSRF_TOUCHPOINT */
   const csrfToken = csrfTokens.create(req.session.csrfSecret);

@@ -16,6 +16,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // 30 minute cookie-based session
+// NOTE: If deploying your own app to production, do not disable secure cookies.
 app.use(
   ironSession({
     cookieName: SESSION_COOKIE_NAME,
