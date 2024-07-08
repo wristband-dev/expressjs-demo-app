@@ -2,7 +2,7 @@
   "name": "multi-tenant-demo-app--client",
   "description": "Single-page React app with multi-tenancy enabled.  This is to demonstrate how developers can intergrate their multi-tenant app with the Wristband platform.",
   "author": "Wristband",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "private": true,
   "type": "module",
   "engines": {
@@ -48,7 +48,7 @@
     "eslint-plugin-react": "^7.34.1",
     "prettier": "^2.8.8",
     "typescript": "^5.3.3",
-    "vite": "^5.0.12",
+    "vite": "^5.3.3",
     "vite-plugin-svgr": "^4.2.0",
     "vite-tsconfig-paths": "^4.3.1"
   },
