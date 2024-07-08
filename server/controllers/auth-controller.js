@@ -40,6 +40,9 @@ exports.authCallback = async (req, res, next) => {
 
       await req.session.save();
 
+      /* CSRF_TOUCHPOINT */
+      updateCsrfTokenAndCookie(req, res);
+
       // Send the user back to the Invotastic application.
       const tenantDomain = process.env.DOMAIN_FORMAT === 'VANITY_DOMAIN' ? `${callbackData.tenantDomainName}.` : '';
       res.redirect(callbackData.returnUrl || `http://${tenantDomain}${INVOTASTIC_HOST}/home`);
@@ -80,8 +83,6 @@ exports.authState = async (req, res) => {
   }
 
   /* CSRF_TOUCHPOINT */
-  // Since this API is the entrypoint for the React app, it is responsible for sending
-  // the initial CSRF token cookie back to the client.
   updateCsrfTokenAndCookie(req, res);
 
   return res.status(200).json({ isAuthenticated: true });
