@@ -21,18 +21,19 @@ function AuthProvider({ children }) {
         const isAuthenticated = await sessionService.getAuthState();
         if (!isAuthenticated) {
           util.redirectToLogin();
-        } else {
-          /* WRISTBAND_TOUCHPOINT - AUTHENTICATION */
-          // We make one call to load all session data to reduce network requests, and then split up the
-          // results into separate cache keys since each key could read/write indepenently of each other.
-          const sessionData = await sessionService.getInitialSessionData();
-          const { assignedRole, company, configs, user } = sessionData;
-          queryClient.setQueryData(['session-user'], user);
-          queryClient.setQueryData(['session-role'], assignedRole);
-          queryClient.setQueryData(['session-company'], company);
-          queryClient.setQueryData(['session-configs'], configs);
-          setIsAuthenticated(true);
+          return;
         }
+
+        /* WRISTBAND_TOUCHPOINT - AUTHENTICATION */
+        // We make one call to load all session data to reduce network requests, and then split up the
+        // results into separate cache keys since each key could read/write indepenently of each other.
+        const sessionData = await sessionService.getInitialSessionData();
+        const { assignedRole, company, configs, user } = sessionData;
+        queryClient.setQueryData(['session-user'], user);
+        queryClient.setQueryData(['session-role'], assignedRole);
+        queryClient.setQueryData(['session-company'], company);
+        queryClient.setQueryData(['session-configs'], configs);
+        setIsAuthenticated(true);
       } catch (error) {
         console.log(error);
         util.redirectToLogout();

@@ -2,7 +2,7 @@
   "name": "b2b-expressjs-demo-app--parent",
   "description": "Parent package for both the Invotastic for Business React client and the NodeJS API server running with Express. This is a set convenience scripts for running Invotastic for Business from the project root directory.",
   "author": "Wristband",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "private": true,
   "engines": {
     "node": ">=18.12.1",

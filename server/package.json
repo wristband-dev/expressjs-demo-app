@@ -2,7 +2,7 @@
   "name": "b2b-expressjs-demo-app--server",
   "description": "NodeJS server backend that orchestrates API requests from the multi-tenant demo single page app.",
   "author": "Wristband",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "private": true,
   "engines": {
     "node": ">=18.12.1",
@@ -17,9 +17,9 @@
     "lint:fix": "eslint . --ext .js --fix"
   },
   "dependencies": {
-    "@wristband/express-auth": "^1.4.0",
+    "@wristband/express-auth": "^2.0.0",
     "agentkeepalive": "^4.5.0",
-    "axios": "^1.6.7",
+    "axios": "^1.7.3",
     "cookie-parser": "^1.4.6",
     "csrf": "^3.1.0",
     "dotenv": "^16.4.1",
