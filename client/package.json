@@ -2,7 +2,7 @@
   "name": "multi-tenant-demo-app--client",
   "description": "Single-page React app with multi-tenancy enabled.  This is to demonstrate how developers can intergrate their multi-tenant app with the Wristband platform.",
   "author": "Wristband",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "private": true,
   "type": "module",
   "engines": {
@@ -25,7 +25,7 @@
     "@mui/x-date-pickers": "^6.1.0",
     "@tanstack/react-query": "^4.29.1",
     "@tanstack/react-query-devtools": "^4.29.1",
-    "axios": "^1.6.7",
+    "axios": "^1.7.3",
     "date-fns": "^2.29.3",
     "material-ui-phone-number": "^3.0.0",
     "notistack": "^3.0.1",
