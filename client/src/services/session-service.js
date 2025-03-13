@@ -20,11 +20,6 @@ export const fetchSessionUser = async function () {
   return response.data;
 };
 
-export const getAuthState = async function () {
-  const response = await apiClient.get('/auth/auth-state');
-  return response.data.isAuthenticated;
-};
-
 export const getInitialSessionData = async function () {
   const response = await apiClient.get(`/v1/session-data`);
   return response.data;

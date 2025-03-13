@@ -10,7 +10,4 @@ router.get('/login', authController.login);
 router.get('/callback', authController.authCallback);
 router.get('/logout', authController.logout);
 
-// This is the first endpoint React calls when mounted in the browser to determine if the user is authenticated.
-router.get('/auth-state', authController.authState);
-
 module.exports = router;
