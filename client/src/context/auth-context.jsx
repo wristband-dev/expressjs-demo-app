@@ -15,16 +15,6 @@ function AuthProvider({ children }) {
     const fetchSession = async () => {
       try {
         /* WRISTBAND_TOUCHPOINT - AUTHENTICATION */
-        /* CSRF_TOUCHPOINT */
-        // The auth state API will let React know if the user has a previously authenticated session. If so,
-        // it will establish a the CSRF cookie and then move on to initializing session data.
-        const isAuthenticated = await sessionService.getAuthState();
-        if (!isAuthenticated) {
-          util.redirectToLogin();
-          return;
-        }
-
-        /* WRISTBAND_TOUCHPOINT - AUTHENTICATION */
         // We make one call to load all session data to reduce network requests, and then split up the
         // results into separate cache keys since each key could read/write indepenently of each other.
         const sessionData = await sessionService.getInitialSessionData();

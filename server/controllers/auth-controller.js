@@ -76,19 +76,3 @@ exports.logout = async (req, res, next) => {
     return next(err);
   }
 };
-
-exports.authState = async (req, res) => {
-  res.header('Cache-Control', 'no-store');
-  res.header('Pragma', 'no-cache');
-
-  const { isAuthenticated, csrfSecret } = req.session;
-
-  if (!isAuthenticated || !csrfSecret) {
-    return res.status(200).json({ isAuthenticated: false });
-  }
-
-  /* CSRF_TOUCHPOINT */
-  updateCsrfTokenAndCookie(req, res);
-
-  return res.status(200).json({ isAuthenticated: true });
-};
