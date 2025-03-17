@@ -22,6 +22,8 @@ export default defineConfig({
   },
   plugins: [react({ include: ['**/*.jsx', '**/*.tsx'] }), viteTsconfigPaths(), svgrPlugin()],
   server: {
+    allowedHosts: ['.business.invotastic.com', 'localhost'],
+    cors: true,
     port: 6001,
     proxy: {
       '/api': {
