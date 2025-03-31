@@ -1,7 +1,6 @@
 'use strict';
 
 const express = require('express');
-const cookieParser = require('cookie-parser');
 const path = require('path');
 
 const ironSession = require('./middleware/init-iron-session');
@@ -13,7 +12,6 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
 
 // 30 minute cookie-based session
 // NOTE: If deploying your own app to production, do not disable secure cookies.

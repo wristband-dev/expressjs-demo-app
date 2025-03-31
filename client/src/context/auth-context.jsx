@@ -1,8 +1,17 @@
 import React, { createContext, useEffect, useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
+import axios from 'axios';
 
-import { sessionService } from 'services';
-import { util } from 'utils';
+import { isUnauthorizedError, isForbiddenError, redirectToLogin, redirectToLogout } from 'utils/auth';
+
+const authProviderClient = axios.create({
+  baseURL: `${window.location.origin}/api`,
+  headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+  withXSRFToken: true,
+  withCredentials: true,
+  xsrfCookieName: 'XSRF-TOKEN',
+  xsrfHeaderName: 'X-XSRF-TOKEN',
+});
 
 const AuthContext = createContext({ isAuthenticated: false });
 
@@ -17,8 +26,10 @@ function AuthProvider({ children }) {
         /* WRISTBAND_TOUCHPOINT - AUTHENTICATION */
         // We make one call to load all session data to reduce network requests, and then split up the
         // results into separate cache keys since each key could read/write indepenently of each other.
-        const sessionData = await sessionService.getInitialSessionData();
-        const { assignedRole, company, configs, user } = sessionData;
+        // const sessionData = await sessionService.getInitialSessionData();
+        const response = await authProviderClient.get('/v1/session-data');
+
+        const { assignedRole, company, configs, user } = response.data;
         queryClient.setQueryData(['session-user'], user);
         queryClient.setQueryData(['session-role'], assignedRole);
         queryClient.setQueryData(['session-company'], company);
@@ -26,7 +37,8 @@ function AuthProvider({ children }) {
         setIsAuthenticated(true);
       } catch (error) {
         console.log(error);
-        util.redirectToLogout();
+        // Don't call logout on 401/403 to preserve the current page for when the user returns after re-authentication.
+        isUnauthorizedError(error) || isForbiddenError(error) ? await redirectToLogin() : await redirectToLogout();
       }
     };
 
