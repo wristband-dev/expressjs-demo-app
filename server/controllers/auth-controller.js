@@ -4,7 +4,7 @@ const { CallbackResultType } = require('@wristband/express-auth');
 
 const wristbandAuth = require('../wristband-auth');
 const { CSRF_TOKEN_COOKIE_NAME, INVOTASTIC_HOST, SESSION_COOKIE_NAME } = require('../utils/constants');
-const { createCsrfSecret, updateCsrfTokenAndCookie } = require('../utils/util');
+const { createCsrfSecret, updateCsrfTokenAndCookie } = require('../utils/csrf');
 
 exports.login = async (req, res, next) => {
   try {

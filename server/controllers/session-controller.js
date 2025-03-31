@@ -1,7 +1,8 @@
 'use strict';
 
 const { WRISTBAND_IDP_NAME } = require('../utils/constants');
-const { bearerToken, updateCsrfTokenAndCookie } = require('../utils/util');
+const { updateCsrfTokenAndCookie } = require('../utils/csrf');
+const { bearerToken } = require('../utils/util');
 const wristbandService = require('../services/wristband-service');
 
 // This API is the entrypoint for the React app.

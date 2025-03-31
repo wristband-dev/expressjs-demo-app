@@ -1,6 +1,6 @@
 'use strict';
 
-const { isCsrfTokenValid, updateCsrfTokenAndCookie } = require('../utils/util');
+const { isCsrfTokenValid, updateCsrfTokenAndCookie } = require('../utils/csrf');
 
 // Middleware that validates that a CSRF token is present in the request header and is valid
 // when compared against the secret stored in the user's session data.  After validation,
