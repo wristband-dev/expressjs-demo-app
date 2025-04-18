@@ -229,9 +229,15 @@ Here are some options:
 
 <br>
 
-## Wristband Express SDK
+## Wristband Express Auth SDK
 
 This demo app is leveraging the [Wristband express-auth SDK](https://github.com/wristband-dev/express-auth) for all authentication interaction in the NodeJS server. Refer to that GitHub repository for more information.
+
+<br>
+
+## Wristband React Client Auth SDK
+
+This demo app is leveraging the [Wristband react-client-auth SDK](https://github.com/wristband-dev/react-client-auth) for any authenticated session interaction in the React frontend. Refer to that GitHub repository for more information.
 
 <br/>
 

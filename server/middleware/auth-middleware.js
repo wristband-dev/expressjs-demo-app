@@ -4,8 +4,8 @@ const wristbandAuth = require('../wristband-auth');
 
 // Middleware that ensures there is an authenticated user session and JWTs are present.
 const authMiddleware = async function (req, res, next) {
-  const { csrfSecret, expiresAt, isAuthenticated, refreshToken } = req.session;
-  if (!isAuthenticated || !csrfSecret) {
+  const { expiresAt, isAuthenticated, refreshToken } = req.session;
+  if (!isAuthenticated) {
     return res.status(401).send();
   }
 

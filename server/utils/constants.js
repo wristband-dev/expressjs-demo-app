@@ -8,7 +8,7 @@ exports.INVOICE_READ_PERM = 'invoice:read';
 exports.INVOICE_WRITE_PERM = 'invoice:write';
 exports.INVOTASTIC_HOST = process.env.DOMAIN_FORMAT === 'LOCALHOST' ? 'localhost:6001' : 'business.invotastic.com:6001';
 exports.NOT_FOUND = 'Not found.';
-exports.SESSION_COOKIE_NAME = 'sid';
+exports.SESSION_COOKIE_NAME = 'session';
 exports.SESSION_COOKIE_SECRET = '96bf13d5-b5c1-463a-812c-0d8db87c0ec5';
 exports.TRUST_SELF_SIGNED_CERT = true;
 exports.WRISTBAND_IDP_NAME = 'wristband';

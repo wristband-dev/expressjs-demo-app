@@ -5,6 +5,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import LogoutIcon from '@mui/icons-material/Logout';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { Person } from '@mui/icons-material';
+import { redirectToLogout } from '@wristband/react-client-auth';
 
 import { TouchpointBadge, SideDrawer } from 'components';
 import { Logo } from 'images';
@@ -15,7 +16,7 @@ const linkStyle = ({ theme }) => {
   return {
     borderBottom: '1px solid transparent',
     color: theme.palette.primary.contrastText,
-    curosr: 'pointer',
+    cursor: 'pointer',
     display: 'flex',
     fontSize: '1.25rem',
     margin: `0 ${theme.spacing(4)}`,
@@ -31,7 +32,7 @@ const linkStyle = ({ theme }) => {
     },
   };
 };
-const StyledExternalLink = styled('a')(linkStyle);
+const StyledLogoutLink = styled('div')(linkStyle);
 const StyledRouterLink = styled(Link)(linkStyle);
 
 export function Navbar() {
@@ -75,10 +76,10 @@ export function Navbar() {
                 sxStyle={{ bottom: '-10%', fontSize: '10px', height: '1rem', left: '50%', width: '7.75rem' }}
               >
                 {/* WRISTBAND_TOUCHPOINT - AUTHENTICATION */}
-                <StyledExternalLink href={`${window.location.origin}/api/auth/logout`}>
+                <StyledLogoutLink onClick={() => redirectToLogout('/api/auth/logout')}>
                   <LogoutIcon />
                   <Typography>Logout</Typography>
-                </StyledExternalLink>
+                </StyledLogoutLink>
               </TouchpointBadge>
             </>
           )}

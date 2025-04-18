@@ -1,8 +1,8 @@
 import React from 'react';
 import { Navigate, Routes, Route } from 'react-router-dom';
+import { useWristbandAuth } from '@wristband/react-client-auth';
 
 import { FullScreenSpinner, Navbar, NewCompanyDialog } from 'components';
-import { useAuth } from 'context';
 import { sessionHooks } from 'hooks';
 import { HomePage, SettingsPage } from 'pages';
 import { AdminPage } from 'pages/admin';
@@ -41,6 +41,6 @@ function AuthenticatedApp() {
 
 export function App() {
   /* WRISTBAND_TOUCHPOINT - AUTHENTICATION */
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated } = useWristbandAuth();
   return isAuthenticated ? <AuthenticatedApp /> : <UnauthenticatedApp />;
 }
