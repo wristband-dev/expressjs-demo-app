@@ -38,14 +38,18 @@ exports.sessionData = async (req, res, next) => {
     updateCsrfTokenAndCookie(req, res);
 
     return res.status(200).json({
-      user,
-      assignedRole,
-      company,
-      configs: {
-        usernameRequired: isWristbandIdp && idp.loginIdentifiers.includes('USERNAME'),
-        passwordRequired: isWristbandIdp && idp.loginFactors.includes('PASSWORD'),
-        passwordMinLength,
-        requiredFields,
+      userId,
+      tenantId,
+      metadata: {
+        user,
+        assignedRole,
+        company,
+        configs: {
+          usernameRequired: isWristbandIdp && idp.loginIdentifiers.includes('USERNAME'),
+          passwordRequired: isWristbandIdp && idp.loginFactors.includes('PASSWORD'),
+          passwordMinLength,
+          requiredFields,
+        },
       },
     });
   } catch (error) {

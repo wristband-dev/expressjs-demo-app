@@ -1,6 +1,7 @@
 import axios from 'axios';
+import { redirectToLogin } from '@wristband/react-client-auth';
 
-import { isUnauthorizedError, isForbiddenError, redirectToLogin } from 'utils/auth';
+import { isUnauthorizedError, isForbiddenError } from 'utils/auth';
 
 /* CSRF_TOUCHPOINT */
 const apiClient = axios.create({
@@ -15,8 +16,8 @@ const apiClient = axios.create({
 // session cookie has expired and/or the CSRF cookie/header are missing in the request.
 // You can optionally catch HTTP 403s as well.
 const unauthorizedAccessInterceptor = async (error) => {
-  if (isUnauthorizedError(error) || isForbiddenError(403)) {
-    await redirectToLogin();
+  if (isUnauthorizedError(error) || isForbiddenError(error)) {
+    redirectToLogin('/api/auth/login');
   }
 
   return Promise.reject(error);

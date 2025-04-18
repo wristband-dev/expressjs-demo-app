@@ -6,6 +6,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { Person } from '@mui/icons-material';
 import SettingsIcon from '@mui/icons-material/Settings';
+import { redirectToLogout } from '@wristband/react-client-auth';
 
 import { TouchpointBadge } from 'components';
 import { sessionHooks } from 'hooks';
@@ -14,6 +15,7 @@ import { isOwnerRole } from 'utils/util';
 const linkStyle = ({ theme }) => {
   return {
     color: theme.palette.primary.main,
+    cursor: 'pointer',
     display: 'flex',
     fontSize: '2rem',
     justifyContent: 'flex-start',
@@ -24,7 +26,7 @@ const linkStyle = ({ theme }) => {
     },
   };
 };
-const StyledExternalLink = styled('a')(linkStyle);
+const StyledLogoutLink = styled('div')(linkStyle);
 const StyledRouterLink = styled(Link)(linkStyle);
 const StyledListItem = styled(ListItem)(({ theme }) => {
   return {
@@ -80,16 +82,16 @@ export function SideDrawer() {
             </ListItemText>
           </StyledListItem>
           <Divider />
-          <StyledListItem onClick={() => setOpenDrawer(false)}>
+          <StyledListItem>
             <ListItemText>
               <TouchpointBadge
                 anchor={{ vertical: 'bottom', horizontal: 'right' }}
                 sxStyle={{ bottom: '-20%', fontSize: '10px', height: '0.825rem', right: '20%', width: '7.75rem' }}
               >
-                <StyledExternalLink href={`${window.location.origin}/api/auth/logout`}>
+                <StyledLogoutLink onClick={() => redirectToLogout('/api/auth/logout')}>
                   <LogoutIcon />
                   <Typography>Logout</Typography>
-                </StyledExternalLink>
+                </StyledLogoutLink>
               </TouchpointBadge>
             </ListItemText>
           </StyledListItem>

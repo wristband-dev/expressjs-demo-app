@@ -23,12 +23,3 @@ function isHttpStatusError(error, statusCode) {
 export const isUnauthorizedError = (error) => isHttpStatusError(error, 401);
 
 export const isForbiddenError = (error) => isHttpStatusError(error, 403);
-
-export function redirectToLogout() {
-  window.location.href = `${window.location.origin}/api/auth/logout`;
-}
-
-export function redirectToLogin() {
-  const query = new URLSearchParams({ return_url: encodeURI(window.location.href) }).toString();
-  window.location.href = `${window.location.origin}/api/auth/login?${query}`;
-}
