@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navigate, Routes, Route } from 'react-router-dom';
+import { Navigate, Routes, Route } from 'react-router';
 import { useWristbandAuth } from '@wristband/react-client-auth';
 
 import { FullScreenSpinner, Navbar, NewCompanyDialog } from 'components';
