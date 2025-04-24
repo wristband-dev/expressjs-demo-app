@@ -46,42 +46,51 @@ First thing is first: make sure you sign up for an Wristband account at [https:/
 
 After your Wristband account is set up, log in to the Wristband dashboard.  Once you land on the home page of the dashboard, click the button labelled "Add Demo App".  Make sure you choose the following options:
 
-- Step 1: App Type - B2B
-- Step 2: Subject to Authenticate - Humans
-- Step 3: Client Framework - Express
-- Step 4: Domain Format  - Choosing `Localhost` is fastest to setup. You can alternatively choose `Vanity Domain` if you want a production-like experience on your local machine for tenant-specific vanity domains, but this method will require additional setup.
+- Step 1: Subject to Authenticate - Humans
+- Step 2: Client Framework - Express
+- Step 3: Domain Format  - Choosing `Localhost` is fastest to setup. You can alternatively choose `Vanity Domain` if you want a production-like experience on your local machine for tenant-specific vanity domains, but this method will require additional setup.
+
+You can also follow the [Demo App Guide](https://docs.wristband.dev/docs/setting-up-a-demo-app) for more information.
 
 ### 3) Apply your Wristband configuration values to the NodeJS server configuration
 
-Upon completing the demo application setup, you will be prompted with values that you should copy into the environment variable configuration for this demo repository, which is located in `server/.env`.  Replace the following values:
+After completing demo app creation, you will be prompted with values that you should use to create environment variables for the Express server. You should see:
 
 - `APPLICATION_DOMAIN`
-- `DOMAIN_FORMAT`
 - `CLIENT_ID`
 - `CLIENT_SECRET`
+- `DOMAIN_FORMAT`
 
-### 4) Run the application in "production" mode 
+Copy those values, then create an environment variable file on the server at: `server/.env`. Once created, paste the copied values into this file.
+
+### 4) Install dependencies
+
+Before attempting to run the application, you'll need to install all project dependencies for both Express and React. From the root directory of this repo, run the following to install dependencies:
+
+```bash
+npm run install-all
+```
+
+### 5) Run the application in "production" mode 
 
 > [!WARNING]
 > Make sure you are in the root directory of this repository.
 
-#### Install dependencies
-
-Now install all dependencies for both the React client application and the NodeJS server:
-
-```npm run install-all```
-
 #### Build the client application bundle
 
-Next, build the React asset bundle that will be served up by NodeJS (asset bundle target location is `server/dist/`):
+Build the React asset bundle that will be served up by NodeJS (asset bundle target location is `server/dist/`):
 
-```npm run build```
+```bash
+npm run build
+```
 
 #### Run the NodeJS server
 
 Start up the NodeJS server in "production" mode. This lets NodeJS serve the React bundle as static content from the NodeJS server.  The NodeJS server runs on port `6001`.
 
-```npm start```
+```bash
+npm start
+```
 
 <br>
 <hr>
@@ -93,7 +102,7 @@ Start up the NodeJS server in "production" mode. This lets NodeJS serve the Reac
 
 Now that Invotastic for Business is up and running, you can sign up your first customer on the Invotastic for Business Signup Page at the following location:
 
-- `http://{application_vanity_domain}/signup`, where `{application_vanity_domain}` should be replaced with the value of the "Application Vanity Domain" value of the Invotastic for Business application (can be found in the Wristband Dashboard by clicking the Application Details side menu of this app).
+- `https://{application_vanity_domain}/signup`, where `{application_vanity_domain}` should be replaced with the value of the "Application Vanity Domain" value of the Invotastic for Business application (can be found in the Wristband Dashboard by clicking the Application Details side menu of this app).
 
 This signup page is hosted by Wristband.  Completing the signup form will provision both a new tenant with the specified tenant domain name and a new user that is assigned to that tenant.
 
@@ -108,7 +117,7 @@ For reference, the home page of this Inovtastic for Business app can be accessed
 
 Users of Invotastic for Business can access the Invotastic for Business Application-level Login Page at the following location:
 
-- `http://{application_vanity_domain}/login`, where `{application_vanity_domain}` should be replaced with the value of the "Application Vanity Domain" value of the Invotastic for Business application (can be found in the Wristband Dashboard by clicking the Application Details side menu of this app).
+- `https://{application_vanity_domain}/login`, where `{application_vanity_domain}` should be replaced with the value of the "Application Vanity Domain" value of the Invotastic for Business application (can be found in the Wristband Dashboard by clicking the Application Details side menu of this app).
 
 This login page is hosted by Wristband.  Here, the user will be prompted to enter their tenant's domain name for which they want to log in to.  Successfully entering the tenant domain name will redirect the user to the tenant-level login page for their specific tenant.
 
@@ -203,11 +212,15 @@ You can run this demo application in "dev" mode in order to actively debug or ex
 
 In one CLI, change to the `client` directory and run the following to start the Vite dev server (runs on port `6001`):
 
-```npm start```
+```bash
+npm start
+```
 
 In a second separate CLI, change to the `server` directory and run the following to start the NodeJS server in "dev" mode (runs on port `3001`):
 
-```npm run dev```
+```bash
+npm run dev
+```
 
 All Invotastic URL locations should remain the same as when using the app in "production" mode.
 
