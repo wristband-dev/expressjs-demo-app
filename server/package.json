@@ -10,14 +10,14 @@
   },
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index.js",
+    "dev": "NODE_TLS_REJECT_UNAUTHORIZED=0 nodemon index.js",
     "reset-db": "node reset-db.js",
     "start": "NODE_ENV=production PORT=6001 node -r dotenv/config index.js",
     "lint": "eslint . --ext .js",
     "lint:fix": "eslint . --ext .js --fix"
   },
   "dependencies": {
-    "@wristband/express-auth": "^2.3.0",
+    "@wristband/express-auth": "^3.0.0",
     "agentkeepalive": "^4.5.0",
     "axios": "^1.8.4",
     "csrf": "^3.1.0",

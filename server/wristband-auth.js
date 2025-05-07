@@ -18,7 +18,7 @@ const wristbandAuth = createWristbandAuth({
   rootDomain: INVOTASTIC_HOST,
   useCustomDomains: false,
   useTenantSubdomains: process.env.DOMAIN_FORMAT === 'VANITY_DOMAIN',
-  wristbandApplicationDomain: process.env.APPLICATION_DOMAIN,
+  wristbandApplicationVanityDomain: process.env.APPLICATION_DOMAIN,
 });
 
 module.exports = wristbandAuth;
