@@ -10,7 +10,8 @@ exports.login = async (req, res, next) => {
   try {
     /* WRISTBAND_TOUCHPOINT - AUTHENTICATION */
     // Redirect out to the Wristband authorize endpoint to start the login process via OAuth2/OIDC Auth Code flow.
-    await wristbandAuth.login(req, res);
+    const loginUrl = await wristbandAuth.login(req, res);
+    res.redirect(loginUrl);
   } catch (err) {
     console.error(err);
     next(err);
@@ -22,14 +23,14 @@ exports.authCallback = async (req, res, next) => {
     /* WRISTBAND_TOUCHPOINT - AUTHENTICATION */
     // After the user authenticates, exchange the incoming authorization code for JWTs and also retrieve userinfo.
     const callbackResult = await wristbandAuth.callback(req, res);
-    const { callbackData, result } = callbackResult;
+    const { callbackData, redirectUrl, type } = callbackResult;
 
-    if (result === CallbackResultType.REDIRECT_REQUIRED) {
-      // The SDK will have already invoked the redirect() function, so we just stop execution here.
-      return;
+    if (type === CallbackResultType.REDIRECT_REQUIRED) {
+      // For certain edge cases, you'll need to redirect to the URL returned from the SDK.
+      return res.redirect(redirectUrl);
     }
 
-    // If the SDK does not need to return a redirect response, then we can save any necessary fields for the user's app
+    // If the SDK determine a redirect is required, then we can save any necessary fields for the user's app
     // session into a session cookie.
     req.session.isAuthenticated = true;
     req.session.accessToken = callbackData.accessToken;
@@ -51,10 +52,10 @@ exports.authCallback = async (req, res, next) => {
 
     // Send the user back to the Invotastic application.
     const tenantDomain = process.env.DOMAIN_FORMAT === 'VANITY_DOMAIN' ? `${callbackData.tenantDomainName}.` : '';
-    res.redirect(callbackData.returnUrl || `http://${tenantDomain}${INVOTASTIC_HOST}/home`);
+    return res.redirect(callbackData.returnUrl || `http://${tenantDomain}${INVOTASTIC_HOST}/home`);
   } catch (err) {
     console.error(err);
-    next(err);
+    return next(err);
   }
 };
 
@@ -70,7 +71,8 @@ exports.logout = async (req, res, next) => {
 
   try {
     /* WRISTBAND_TOUCHPOINT - AUTHENTICATION */
-    return await wristbandAuth.logout(req, res, { tenantCustomDomain, tenantDomainName, refreshToken });
+    const logoutUrl = await wristbandAuth.logout(req, res, { tenantCustomDomain, tenantDomainName, refreshToken });
+    return res.redirect(logoutUrl);
   } catch (err) {
     console.error(err);
     return next(err);
