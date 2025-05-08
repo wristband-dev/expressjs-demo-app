@@ -7,7 +7,7 @@ const https = require('node:https');
 const JSON_MEDIA_TYPE = 'application/json;charset=UTF-8';
 
 const apiClient = axios.create({
-  baseURL: `https://${process.env.APPLICATION_DOMAIN}/api/v1`,
+  baseURL: `https://${process.env.APPLICATION_VANITY_DOMAIN}/api/v1`,
   httpAgent: new Agent({
     maxSockets: 100,
     maxFreeSockets: 10,

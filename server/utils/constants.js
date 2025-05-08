@@ -6,10 +6,11 @@ exports.INVALID_PHONE_NUMBER = 'Invalid phone number provided.';
 exports.INVALID_REQUEST = 'Invalid request.';
 exports.INVOICE_READ_PERM = 'invoice:read';
 exports.INVOICE_WRITE_PERM = 'invoice:write';
-exports.INVOTASTIC_HOST = process.env.DOMAIN_FORMAT === 'LOCALHOST' ? 'localhost:6001' : 'business.invotastic.com:6001';
+exports.INVOTASTIC_HOST = 'localhost:6001';
+exports.LOGIN_STATE_COOKIE_SECRET = 'dummyval-ab7d-4134-9307-2dfcc52f7475';
 exports.NOT_FOUND = 'Not found.';
 exports.SESSION_COOKIE_NAME = 'session';
-exports.SESSION_COOKIE_SECRET = '96bf13d5-b5c1-463a-812c-0d8db87c0ec5';
+exports.SESSION_COOKIE_SECRET = 'dummyval-b5c1-463a-812c-0d8db87c0ec5';
 exports.TRUST_SELF_SIGNED_CERT = true;
 exports.WRISTBAND_IDP_NAME = 'wristband';
 
