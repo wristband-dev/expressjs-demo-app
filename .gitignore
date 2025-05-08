@@ -64,5 +64,4 @@ server/db.json
 
 # Env var config
 .env
-server/.env
-**/.env
+**/*.env
