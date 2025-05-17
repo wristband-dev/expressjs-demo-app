@@ -1,6 +1,6 @@
 'use strict';
 
-exports.CSRF_TOKEN_COOKIE_NAME = 'XSRF-TOKEN';
+exports.CSRF_TOKEN_COOKIE_NAME = 'CSRF-TOKEN';
 exports.FORBIDDEN_ACCESS_RESPONSE = { code: 'Access denied.', message: 'Forbidden access.' };
 exports.INVALID_PHONE_NUMBER = 'Invalid phone number provided.';
 exports.INVALID_REQUEST = 'Invalid request.';

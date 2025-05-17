@@ -4,7 +4,7 @@ const { CallbackResultType } = require('@wristband/express-auth');
 
 const wristbandAuth = require('../wristband-auth');
 const { CSRF_TOKEN_COOKIE_NAME, INVOTASTIC_HOST, SESSION_COOKIE_NAME } = require('../utils/constants');
-const { createCsrfSecret, updateCsrfTokenAndCookie } = require('../utils/csrf');
+const { createCsrfToken, updateCsrfCookie } = require('../utils/csrf');
 
 exports.login = async (req, res, next) => {
   try {
@@ -43,12 +43,12 @@ exports.authCallback = async (req, res, next) => {
     req.session.tenantDomainName = callbackData.tenantDomainName;
     req.session.tenantCustomDomain = callbackData.tenantCustomDomain || undefined;
     /* CSRF_TOUCHPOINT */
-    req.session.csrfSecret = createCsrfSecret();
+    req.session.csrfToken = createCsrfToken();
 
     await req.session.save();
 
     /* CSRF_TOUCHPOINT */
-    updateCsrfTokenAndCookie(req, res);
+    updateCsrfCookie(req, res);
 
     // Send the user back to the Invotastic application.
     const tenantDomain = process.env.DOMAIN_FORMAT === 'VANITY_DOMAIN' ? `${callbackData.tenantDomainName}.` : '';

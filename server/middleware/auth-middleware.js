@@ -1,12 +1,18 @@
 'use strict';
 
 const wristbandAuth = require('../wristband-auth');
+const { updateCsrfCookie } = require('../utils/csrf');
 
 // Middleware that ensures there is an authenticated user session and JWTs are present.
 const authMiddleware = async function (req, res, next) {
-  const { expiresAt, isAuthenticated, refreshToken } = req.session;
+  const { csrfToken, expiresAt, isAuthenticated, refreshToken } = req.session;
   if (!isAuthenticated) {
     return res.status(401).send();
+  }
+
+  /* CSRF_TOUCHPOINT */
+  if (!csrfToken || csrfToken !== req.headers['x-csrf-token']) {
+    return res.status(403).send();
   }
 
   try {
@@ -19,8 +25,10 @@ const authMiddleware = async function (req, res, next) {
       req.session.refreshToken = tokenData.refreshToken;
     }
 
-    // Save the session in order to "touch" it (even if there is no new token data).
+    // "Touch" the session and CSRF cookies.
     await req.session.save();
+    updateCsrfCookie(req, res);
+
     return next();
   } catch (error) {
     console.error(`Failed to refresh token due to: ${error}`);
