@@ -1,7 +1,6 @@
 'use strict';
 
 const { WRISTBAND_IDP_NAME } = require('../utils/constants');
-const { updateCsrfTokenAndCookie } = require('../utils/csrf');
 const { bearerToken } = require('../utils/util');
 const wristbandService = require('../services/wristband-service');
 
@@ -32,10 +31,6 @@ exports.sessionData = async (req, res, next) => {
     })[0].minimumLength;
     const requiredFields = userSchema.items[0].item.baseProfile.required;
     const isWristbandIdp = identityProviderName === WRISTBAND_IDP_NAME;
-
-    /* CSRF_TOUCHPOINT */
-    // The entrypoint API is responsible for sending the initial CSRF token cookie back to the browser.
-    updateCsrfTokenAndCookie(req, res);
 
     return res.status(200).json({
       userId,

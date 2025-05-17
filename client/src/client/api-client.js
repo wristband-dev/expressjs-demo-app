@@ -7,8 +7,8 @@ import { isUnauthorizedError, isForbiddenError } from 'utils/auth';
 const apiClient = axios.create({
   baseURL: `${window.location.origin}/api`,
   headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-  xsrfCookieName: 'XSRF-TOKEN',
-  xsrfHeaderName: 'X-XSRF-TOKEN',
+  xsrfCookieName: 'CSRF-TOKEN',
+  xsrfHeaderName: 'X-CSRF-TOKEN',
 });
 
 /* WRISTBAND_TOUCHPOINT - AUTHENTICATION */
