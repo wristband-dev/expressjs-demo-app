@@ -17,7 +17,7 @@
     "lint:fix": "eslint . --ext .js --fix"
   },
   "dependencies": {
-    "@wristband/express-auth": "^3.0.1",
+    "@wristband/express-auth": "^4.0.0",
     "agentkeepalive": "^4.5.0",
     "axios": "^1.8.4",
     "csrf": "^3.1.0",
