@@ -9,11 +9,10 @@ const wristbandAuth = createWristbandAuth({
   clientSecret: process.env.CLIENT_SECRET,
   // NOTE: If deploying your own app to production, do not disable secure cookies.
   dangerouslyDisableSecureCookies: true,
+  isApplicationCustomDomainActive: false,
   loginStateSecret: LOGIN_STATE_COOKIE_SECRET,
   loginUrl: `http://${INVOTASTIC_HOST}/api/auth/login`,
   redirectUri: `http://${INVOTASTIC_HOST}/api/auth/callback`,
-  useCustomDomains: false,
-  useTenantSubdomains: false,
   wristbandApplicationVanityDomain: process.env.APPLICATION_VANITY_DOMAIN,
 });
 
