@@ -1,24 +1,23 @@
 'use strict';
 
-const { WRISTBAND_IDP_NAME } = require('../utils/constants');
 const { bearerToken } = require('../utils/util');
 const wristbandService = require('../services/wristband-service');
 
-// This API is the entrypoint for the React app.
-exports.sessionData = async (req, res, next) => {
-  const { identityProviderName, tenantId, userId } = req.session;
+/**
+ * Session Endpoint: Data loaded upon app mount and stored in Wristband's react-client-auth SDK cache.
+ * This API is the entrypoint for the React SPA.
+ */
+exports.session = async (req, res, next) => {
+  const { tenantId, userId } = req.session;
 
   res.header('Cache-Control', 'no-store');
   res.header('Pragma', 'no-cache');
 
   try {
     /* WRISTBAND_TOUCHPOINT - RESOURCE API */
-    const [user, assignedRole, idp, pwPolicy, userSchema, company] = await Promise.all([
+    const [user, assignedRole, company] = await Promise.all([
       wristbandService.getUser(userId, bearerToken(req)),
       wristbandService.getAssignedRole(userId, bearerToken(req)),
-      wristbandService.getIdentityProviderByNameForTenant(tenantId, identityProviderName, bearerToken(req)),
-      wristbandService.getPasswordPolicyForTenant(tenantId, bearerToken(req)),
-      wristbandService.getUserSchemaForTenant(tenantId, bearerToken(req)),
       wristbandService.getTenant(tenantId, bearerToken(req)),
     ]);
 
@@ -26,32 +25,20 @@ exports.sessionData = async (req, res, next) => {
       return res.status(401).send();
     }
 
-    const passwordMinLength = pwPolicy.items.map((override) => {
-      return override.item;
-    })[0].minimumLength;
-    const requiredFields = userSchema.items[0].item.baseProfile.required;
-    const isWristbandIdp = identityProviderName === WRISTBAND_IDP_NAME;
-
     return res.status(200).json({
       userId,
       tenantId,
-      metadata: {
-        user,
-        assignedRole,
-        company,
-        configs: {
-          usernameRequired: isWristbandIdp && idp.loginIdentifiers.includes('USERNAME'),
-          passwordRequired: isWristbandIdp && idp.loginFactors.includes('PASSWORD'),
-          passwordMinLength,
-          requiredFields,
-        },
-      },
+      metadata: { user, assignedRole, company },
     });
   } catch (error) {
     return next(error);
   }
 };
 
+/**
+ * Session data for React-Query: The following controllers are used to to load data on-demand per-page/component,
+ * or during React-Query cache refresh. These endpoints are for demo purposes and are unrelated to Wristband SDKs.
+ */
 exports.userinfo = async (req, res, next) => {
   const { userId } = req.session;
 
@@ -63,7 +50,6 @@ exports.userinfo = async (req, res, next) => {
     return next(error);
   }
 };
-
 exports.roleInfo = async (req, res, next) => {
   const { userId } = req.session;
 
@@ -75,7 +61,6 @@ exports.roleInfo = async (req, res, next) => {
     return next(error);
   }
 };
-
 exports.companyInfo = async (req, res, next) => {
   const { tenantId } = req.session;
 
@@ -87,35 +72,6 @@ exports.companyInfo = async (req, res, next) => {
     return next(error);
   }
 };
-
-exports.sessionConfigs = async (req, res, next) => {
-  const { identityProviderName, tenantId } = req.session;
-
-  try {
-    /* WRISTBAND_TOUCHPOINT - RESOURCE API */
-    const [wristbandIdp, pwPolicy, userSchema] = await Promise.all([
-      wristbandService.getIdentityProviderByNameForTenant(tenantId, identityProviderName, bearerToken(req)),
-      wristbandService.getPasswordPolicyForTenant(tenantId, bearerToken(req)),
-      wristbandService.getUserSchemaForTenant(tenantId, bearerToken(req)),
-    ]);
-
-    const passwordMinLength = pwPolicy.items.map((override) => {
-      return override.item;
-    })[0].minimumLength;
-    const requiredFields = userSchema.items[0].item.baseProfile.required;
-    const isWristbandIdp = identityProviderName === WRISTBAND_IDP_NAME;
-
-    return res.status(200).json({
-      usernameRequired: isWristbandIdp && wristbandIdp.loginIdentifiers.includes('USERNAME'),
-      passwordRequired: isWristbandIdp && wristbandIdp.loginFactors.includes('PASSWORD'),
-      passwordMinLength,
-      requiredFields,
-    });
-  } catch (error) {
-    return next(error);
-  }
-};
-
 exports.getAssignableRoleOptions = async (req, res, next) => {
   const { tenantId } = req.session;
 

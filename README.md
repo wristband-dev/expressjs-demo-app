@@ -147,7 +147,6 @@ Companies that signup with Invotastic for Business will be provisioned a tenant 
 
 - Create new invoices
 - Cancel invoices
-- Update company information
 - Invite admins 
 
 ### Architecture

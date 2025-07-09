@@ -30,28 +30,6 @@ exports.hasConstraintsViolations = (response) => {
   );
 };
 
-exports.newEmailUnchanged = (response) => {
-  return (
-    response.violations.newEmail &&
-    response.violations.newEmail
-      .map((item) => {
-        return item.code;
-      })
-      .includes('email_unchanged')
-  );
-};
-
-exports.newEmailExists = (response) => {
-  return (
-    response.violations.newEmail &&
-    response.violations.newEmail
-      .map((item) => {
-        return item.code;
-      })
-      .includes('not_unique')
-  );
-};
-
 exports.emailExists = (response) => {
   return (
     response.violations.email &&
@@ -60,16 +38,5 @@ exports.emailExists = (response) => {
         return item.code;
       })
       .includes('not_unique')
-  );
-};
-
-exports.invalidPhoneNumber = (response) => {
-  return (
-    response.violations.phoneNumber &&
-    response.violations.phoneNumber
-      .map((item) => {
-        return item.code;
-      })
-      .includes('invalid_e164_phone_number')
   );
 };

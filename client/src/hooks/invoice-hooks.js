@@ -1,5 +1,4 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { useSnackbar } from 'notistack';
 
 import { invoiceService } from 'services';
 
@@ -7,39 +6,31 @@ export const useInvoices = (companyId) => {
   return useQuery(['invoices'], () => invoiceService.fetchInvoices(companyId), { placeholderData: [] });
 };
 
-export const useInvoice = (invoiceId) => {
-  return useQuery(['invoices', invoiceId], () => invoiceService.fetchInvoices(invoiceId), { placeholderData: {} });
-};
-
 export const useCreateInvoice = (closeFormDialog) => {
   const queryClient = useQueryClient();
-  const { enqueueSnackbar } = useSnackbar();
 
   return useMutation(invoiceService.createInvoice, {
-    onSuccess: (data) => {
+    onSuccess: () => {
       closeFormDialog();
       queryClient.invalidateQueries('invoices');
-      enqueueSnackbar(`Invoice ${data.invoiceNumber} created successfully.`, { variant: 'success' });
+      alert('Invoice created successfully.');
     },
     onError: (error) => {
       console.log(error);
-      enqueueSnackbar(`${error.response.data.code}`, { variant: 'error' });
+      alert(error.response.data.code);
     },
   });
 };
 
 export const useUpdateInvoice = () => {
   const queryClient = useQueryClient();
-  const { enqueueSnackbar } = useSnackbar();
 
   return useMutation(invoiceService.updateInvoice, {
-    onSuccess: (data) => {
-      enqueueSnackbar(`Invoice ${data.invoiceNumber} updated successfully.`, { variant: 'success' });
-    },
+    onSuccess: () => alert('Invoice updated successfully.'),
     onMutate: async () => await queryClient.cancelQueries('invoices'),
     onError: (error) => {
       console.log(error);
-      enqueueSnackbar(`${error.response.data.code}`, { variant: 'error' });
+      alert(error.response.data.code);
     },
     onSettled: () => queryClient.invalidateQueries('invoices'),
   });

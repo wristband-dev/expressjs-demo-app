@@ -2,7 +2,7 @@
 
 const { CallbackResultType } = require('@wristband/express-auth');
 
-const wristbandAuth = require('../wristband-auth');
+const { wristbandAuth } = require('../wristband');
 const { CSRF_TOKEN_COOKIE_NAME, INVOTASTIC_HOST, SESSION_COOKIE_NAME } = require('../utils/constants');
 const { createCsrfToken, updateCsrfCookie } = require('../utils/csrf');
 
