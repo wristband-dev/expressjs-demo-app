@@ -10,7 +10,7 @@
   },
   "main": "index.js",
   "scripts": {
-    "dev": "NODE_TLS_REJECT_UNAUTHORIZED=0 nodemon index.js",
+    "dev": "nodemon index.js",
     "reset-db": "node reset-db.js",
     "start": "NODE_ENV=production PORT=6001 node -r dotenv/config index.js",
     "lint": "eslint . --ext .js",
