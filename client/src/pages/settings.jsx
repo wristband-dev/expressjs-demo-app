@@ -1,26 +1,25 @@
 import React from 'react';
 import { Grid, Typography } from '@mui/material';
 
-import { AccountSettingsForm, TouchpointChip, CustomDivider, ProfileSettingsForm } from 'components';
+import { TouchpointChip, ProfileSettingsForm, InviteUserForm } from 'components';
 import { sessionHooks } from 'hooks';
+import { isOwnerRole } from 'utils';
 
 export function SettingsPage() {
-  const { data: sessionConfigs, error, isInitialLoading } = sessionHooks.useSessionConfigs();
-
-  if (isInitialLoading) {
-    return 'Loading...';
-  }
-
-  if (error) {
-    return 'An error has occurred retrieving your session configs: ' + error.message;
-  }
+  const { data: company } = sessionHooks.useSessionCompany();
+  const { data: role } = sessionHooks.useSessionRole();
+  const { data: user } = sessionHooks.useSessionUser();
 
   return (
     <Grid container maxWidth={1200} marginX="auto">
-      <Grid item xs={12} marginTop="2rem" textAlign="center">
+      <Grid item xs={12} marginTop="3rem" textAlign="center">
         <Typography fontSize="2rem">Settings</Typography>
+        <Typography sx={{ margin: '1rem auto 0', padding: '0 2rem', maxWidth: '800px', textAlign: 'left' }}>
+          {`All API interactions on this page are protected with your session cookie and CSRF token.
+          Only admins with the "Owner" role can invite admins.`}
+        </Typography>
       </Grid>
-      <Grid container item xs={12} marginBottom="2rem">
+      <Grid container item xs={12} margin="1rem 0 2rem">
         <Grid item xs={1} sm={2} />
         <Grid container item xs={10} sm={8}>
           <Grid item xs={12}>
@@ -28,17 +27,25 @@ export function SettingsPage() {
               Profile
             </Typography>
             <TouchpointChip />
-            <ProfileSettingsForm sessionConfigs={sessionConfigs} />
-          </Grid>
-          <Grid item xs={12} marginY={2}>
-            <CustomDivider />
+            <Typography fontSize="0.875rem" fontWeight={700} margin="1rem 0 0.5rem">
+              {`Email: ${user.email}`}
+            </Typography>
+            <ProfileSettingsForm />
           </Grid>
           <Grid item xs={12}>
             <Typography fontSize="1.5rem" margin="1rem 0 0.5rem">
-              Account
+              Invite Admins
             </Typography>
             <TouchpointChip />
-            <AccountSettingsForm sessionConfigs={sessionConfigs} />
+            <Typography fontSize="0.875rem" fontWeight={700} margin="1rem 0 0.5rem">
+              {`Company: ${company.displayName}`}
+            </Typography>
+            {/* WRISTBAND_TOUCHPOINT - AUTHORIZATION */}
+            {isOwnerRole(role.name) ? (
+              <InviteUserForm />
+            ) : (
+              <Typography marginTop="2rem">{'Must have the "Owner" role to invite other users!'}</Typography>
+            )}
           </Grid>
         </Grid>
         <Grid item xs={1} sm={2} />

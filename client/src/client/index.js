@@ -1,1 +1,41 @@
-export { apiClient } from './api-client';
+import axios from 'axios';
+import { redirectToLogin } from '@wristband/react-client-auth';
+
+import { isUnauthorizedError, isForbiddenError } from 'utils';
+
+const baseURL = `${window.location.origin}/api`;
+const headers = { 'Content-Type': 'application/json', Accept: 'application/json' };
+
+/**
+ * This API client is used for most API calls to the Express server. It passes along the CSRF token
+ * in the request and automatically sends users to the login page if they are not authenticated.
+ */
+const apiClient = axios.create({
+  baseURL,
+  headers,
+  /* CSRF_TOUCHPOINT */
+  xsrfCookieName: 'CSRF-TOKEN',
+  xsrfHeaderName: 'X-CSRF-TOKEN',
+  withCredentials: true,
+  withXSRFToken: true,
+});
+
+// Any HTTP 401s should trigger the user to go log in again.  This happens when their
+// session cookie has expired and/or the CSRF cookie/header are missing in the request.
+// You can optionally catch HTTP 403s as well.
+apiClient.interceptors.response.use(undefined, async (error) => {
+  if (isUnauthorizedError(error) || isForbiddenError(error)) {
+    /* WRISTBAND_TOUCHPOINT - AUTHENTICATION */
+    redirectToLogin('/api/auth/login');
+  }
+
+  return Promise.reject(error);
+});
+
+/**
+ * This API client is used for API calls to the Express server that require an access token to be passed
+ * in the Authorization request header.
+ */
+const apiClientWithJwt = axios.create({ baseURL, headers });
+
+export { apiClient, apiClientWithJwt };

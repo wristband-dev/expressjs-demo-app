@@ -1,6 +1,6 @@
 {
   "name": "expressjs-demo-app--client",
-  "description": "Single-page React app with multi-tenancy enabled.  This is to demonstrate how developers can intergrate their multi-tenant app with the Wristband platform.",
+  "description": "React SPA that demonstrates how developers can intergrate their multi-tenant app with the Wristband platform.",
   "author": "Wristband",
   "version": "0.1.0",
   "private": true,
@@ -20,27 +20,20 @@
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.11.16",
-    "@mui/lab": "^5.0.0-alpha.126",
     "@mui/material": "^5.15.6",
-    "@mui/x-date-pickers": "^6.1.0",
     "@tanstack/react-query": "^4.29.1",
     "@tanstack/react-query-devtools": "^4.29.1",
-    "@wristband/react-client-auth": "^1.0.0",
-    "axios": "^1.8.4",
+    "@wristband/react-client-auth": "^1.1.0",
+    "axios": "^1.10.0",
     "caniuse-lite": "^1.0.30001705",
-    "date-fns": "^2.29.3",
-    "material-ui-phone-number": "^3.0.0",
-    "notistack": "^3.0.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-number-format": "^5.1.4",
-    "react-router": "^7.5.2",
-    "styled-components": "^6.1.8"
+    "react-router": "^7.5.2"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^7.5.0",
     "@typescript-eslint/parser": "^7.5.0",
-    "@vitejs/plugin-react": "^4.0.0",
+    "@vitejs/plugin-react": "^4.6.0",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^8.10.0",
     "eslint-config-react": "^1.1.7",
@@ -50,9 +43,8 @@
     "eslint-plugin-react": "^7.34.1",
     "prettier": "^2.8.8",
     "typescript": "^5.3.3",
-    "vite": "^6.3.2",
-    "vite-plugin-svgr": "^4.3.0",
-    "vite-tsconfig-paths": "^4.3.2"
+    "vite": "^6.3.5",
+    "vite-tsconfig-paths": "^5.1.4"
   },
   "eslintConfig": {
     "extends": [

@@ -1,17 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import DoNotDisturbIcon from '@mui/icons-material/DoNotDisturb';
-import FindInPageIcon from '@mui/icons-material/FindInPage';
 
-import { ViewInvoiceDialog } from 'components';
 import { invoiceHooks, sessionHooks } from 'hooks';
-import { isOwnerRole, toCapitalizedCase } from 'utils/util';
+import { isOwnerRole } from 'utils';
 
 export function InvoiceTable({ invoices = [] }) {
   const { data: role } = sessionHooks.useSessionRole();
-
-  const [showViewInvoice, setShowViewInvoice] = useState(false);
   const { mutate: cancelInvoice } = invoiceHooks.useUpdateInvoice();
+  const isAdmin = isOwnerRole(role.name);
 
   return (
     <TableContainer component={Paper}>
@@ -19,44 +16,33 @@ export function InvoiceTable({ invoices = [] }) {
         <TableHead>
           <TableRow>
             <TableCell align="left">Date</TableCell>
-            <TableCell align="right">Number</TableCell>
-            <TableCell align="right">Customer</TableCell>
-            <TableCell align="right">Amount</TableCell>
-            <TableCell align="right">Status</TableCell>
+            <TableCell align="left">Customer</TableCell>
+            <TableCell align="left">Email</TableCell>
+            <TableCell align="left">Amount</TableCell>
+            <TableCell align="left">Status</TableCell>
             <TableCell align="center">Actions</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {invoices.map((invoice) => (
             <TableRow key={invoice.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-              <TableCell component="th" scope="row">
-                {invoice.invoiceDate}
-              </TableCell>
-              <TableCell align="right">{invoice.invoiceNumber}</TableCell>
-              <TableCell align="right">{invoice.customerName}</TableCell>
-              <TableCell align="right">{'$ ' + invoice.totalDue}</TableCell>
-              <TableCell align="right">{toCapitalizedCase(invoice.status)}</TableCell>
+              <TableCell align="left">{invoice.invoiceDate}</TableCell>
+              <TableCell align="left">{invoice.customerName}</TableCell>
+              <TableCell align="left">{invoice.customerEmail}</TableCell>
+              <TableCell align="left">{'$ ' + invoice.totalDue}</TableCell>
+              <TableCell align="left">{invoice.status.toUpperCase()}</TableCell>
               <TableCell align="center">
                 {invoice.status !== 'CANCELLED' && (
-                  <>
-                    <ViewInvoiceDialog
-                      invoice={invoice}
-                      open={showViewInvoice}
-                      handleClose={() => setShowViewInvoice(false)}
-                    />
-                    <IconButton aria-label="View Invoice" title="View Invoice" onClick={() => setShowViewInvoice(true)}>
-                      <FindInPageIcon />
-                    </IconButton>
-                    <IconButton
-                      aria-label="Cancel Invoice"
-                      title="Cancel Invoice"
-                      /* WRISTBAND_TOUCHPOINT - AUTHORIZATION */
-                      disabled={!isOwnerRole(role.name)}
-                      onClick={() => cancelInvoice({ id: invoice.id, status: 'CANCELLED' })}
-                    >
-                      <DoNotDisturbIcon />
-                    </IconButton>
-                  </>
+                  <IconButton
+                    color="error"
+                    aria-label="Cancel Invoice"
+                    title={isAdmin ? 'Cancel Invoice' : 'Only admins can cancel invoices.'}
+                    /* WRISTBAND_TOUCHPOINT - AUTHORIZATION */
+                    disabled={!isAdmin}
+                    onClick={() => cancelInvoice({ id: invoice.id, status: 'CANCELLED' })}
+                  >
+                    <DoNotDisturbIcon />
+                  </IconButton>
                 )}
               </TableCell>
             </TableRow>

@@ -4,13 +4,11 @@ import { AppBar, Box, Toolbar, Typography, styled, useTheme, useMediaQuery } fro
 import HomeIcon from '@mui/icons-material/Home';
 import LogoutIcon from '@mui/icons-material/Logout';
 import SettingsIcon from '@mui/icons-material/Settings';
-import { Person } from '@mui/icons-material';
+import { Key } from '@mui/icons-material';
 import { redirectToLogout } from '@wristband/react-client-auth';
 
 import { TouchpointBadge, SideDrawer } from 'components';
 import { Logo } from 'images';
-import { sessionHooks } from 'hooks';
-import { isOwnerRole } from 'utils/util';
 
 const linkStyle = ({ theme }) => {
   return {
@@ -38,7 +36,6 @@ const StyledRouterLink = styled(Link)(linkStyle);
 export function Navbar() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const { data: role } = sessionHooks.useSessionRole();
 
   return (
     <AppBar position="sticky">
@@ -60,13 +57,10 @@ export function Navbar() {
                 <HomeIcon />
                 <Typography>Home</Typography>
               </StyledRouterLink>
-              {/* WRISTBAND_TOUCHPOINT - AUTHORIZATION */}
-              {isOwnerRole(role.name) && (
-                <StyledRouterLink to="/admin">
-                  <Person />
-                  <Typography>Admin</Typography>
-                </StyledRouterLink>
-              )}
+              <StyledRouterLink to="/tokens">
+                <Key />
+                <Typography>Tokens</Typography>
+              </StyledRouterLink>
               <StyledRouterLink to="/settings">
                 <SettingsIcon />
                 <Typography>Settings</Typography>

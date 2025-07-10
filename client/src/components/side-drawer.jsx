@@ -4,13 +4,11 @@ import { Divider, Drawer, IconButton, List, ListItem, ListItemText, Typography, 
 import MenuIcon from '@mui/icons-material/Menu';
 import HomeIcon from '@mui/icons-material/Home';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { Person } from '@mui/icons-material';
+import { Key } from '@mui/icons-material';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { redirectToLogout } from '@wristband/react-client-auth';
 
 import { TouchpointBadge } from 'components';
-import { sessionHooks } from 'hooks';
-import { isOwnerRole } from 'utils/util';
 
 const linkStyle = ({ theme }) => {
   return {
@@ -37,7 +35,6 @@ const StyledListItem = styled(ListItem)(({ theme }) => {
 export function SideDrawer() {
   const theme = useTheme();
   const [openDrawer, setOpenDrawer] = useState(false);
-  const { data: role } = sessionHooks.useSessionRole();
 
   return (
     <>
@@ -58,21 +55,15 @@ export function SideDrawer() {
             </ListItemText>
           </StyledListItem>
           <Divider />
-          {/* WRISTBAND_TOUCHPOINT - AUTHORIZATION */}
-          {isOwnerRole(role.name) && (
-            <>
-              <StyledListItem onClick={() => setOpenDrawer(false)}>
-                <ListItemText>
-                  <StyledRouterLink to="/admin">
-                    <Person />
-                    <Typography>Admin</Typography>
-                  </StyledRouterLink>
-                </ListItemText>
-              </StyledListItem>
-              <Divider />
-            </>
-          )}
-
+          <StyledListItem onClick={() => setOpenDrawer(false)}>
+            <ListItemText>
+              <StyledRouterLink to="/tokens">
+                <Key />
+                <Typography>Tokens</Typography>
+              </StyledRouterLink>
+            </ListItemText>
+          </StyledListItem>
+          <Divider />
           <StyledListItem onClick={() => setOpenDrawer(false)}>
             <ListItemText>
               <StyledRouterLink to="/settings">

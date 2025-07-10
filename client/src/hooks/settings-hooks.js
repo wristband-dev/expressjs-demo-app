@@ -1,5 +1,4 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { useSnackbar } from 'notistack';
 
 import { settingsService } from 'services';
 
@@ -15,13 +14,12 @@ export const useNewUserInvites = () => {
 
 export const useCreateNewUserInvite = () => {
   const queryClient = useQueryClient();
-  const { enqueueSnackbar } = useSnackbar();
 
   return useMutation(settingsService.createNewUserInvite, {
-    onSuccess: () => enqueueSnackbar('The user invite email has been sent.', { variant: 'success' }),
+    onSuccess: () => alert('The user invite email has been sent.'),
     onError: (error) => {
       console.log(error);
-      enqueueSnackbar(`${error.response.data.code}`, { variant: 'error' });
+      alert(error.response.data.code);
     },
     onSettled: () => queryClient.invalidateQueries('new-user-invites'),
   });
@@ -29,71 +27,39 @@ export const useCreateNewUserInvite = () => {
 
 export const useCancelNewUserInvite = () => {
   const queryClient = useQueryClient();
-  const { enqueueSnackbar } = useSnackbar();
 
   return useMutation(settingsService.cancelNewUserInvite, {
-    onSuccess: () => enqueueSnackbar('Invitation has been cancelled.', { variant: 'success' }),
     onMutate: async () => await queryClient.cancelQueries('new-user-invites'),
     onError: (error) => {
       console.log(error);
-      enqueueSnackbar(`${error.response.data.code}`, { variant: 'error' });
+      alert(error.response.data.code);
     },
     onSettled: () => queryClient.invalidateQueries({ queryKey: ['new-user-invites'] }),
   });
 };
 
-export const useChangeEmailRequests = () => {
-  return useQuery(['change-email-requests'], settingsService.fetchChangeEmailRequests, {
-    placeholderData: { items: [], totalResults: 0 },
-  });
-};
-
-export const useCreateChangeEmailRequest = () => {
+export const useUpdateUser = () => {
   const queryClient = useQueryClient();
-  const { enqueueSnackbar } = useSnackbar();
 
-  return useMutation(settingsService.createChangeEmailRequest, {
-    onSuccess: () => enqueueSnackbar('Check your inbox for further instructions.', { variant: 'success' }),
-    onError: (error) => {
-      console.log(error);
-      enqueueSnackbar(`${error.response.data.code}`, { variant: 'error' });
+  return useMutation(settingsService.updateUser, {
+    onMutate: async (updatedUser) => {
+      // Cancel any outgoing refetches so they don't overwrite our optimistic update
+      await queryClient.cancelQueries({ queryKey: ['session-user'], exact: true });
+      // Snapshot the previous value
+      const previousUser = queryClient.getQueryData(['session-user']);
+      // Optimistically update to the new value
+      queryClient.setQueryData(['session-user'], { ...previousUser, ...updatedUser });
+      // Return a context with the previous and new value
+      return { previousUser, updatedUser };
     },
-    onSettled: () => queryClient.invalidateQueries('change-email-requests'),
-  });
-};
-
-export const useCancelChangeEmailRequest = () => {
-  const queryClient = useQueryClient();
-  const { enqueueSnackbar } = useSnackbar();
-
-  return useMutation(settingsService.cancelChangeEmailRequest, {
-    onSuccess: () => enqueueSnackbar('Change email request has been cancelled.', { variant: 'success' }),
-    onMutate: async () => await queryClient.cancelQueries('change-email-requests'),
-    onError: (error) => {
-      console.log(error);
-      enqueueSnackbar(`${error.response.data.code}`, { variant: 'error' });
+    onSuccess: (data) => {
+      queryClient.setQueryData(['session-user'], data);
+      alert('Profile updated successfully.');
     },
-    onSettled: () => queryClient.invalidateQueries('change-email-requests'),
-  });
-};
-
-// This could probably just be a raw axios call from the component logic since password data is
-// not part of the session user data.
-export const useChangePassword = (clearPasswords) => {
-  const { enqueueSnackbar } = useSnackbar();
-
-  return useMutation(settingsService.changePassword, {
-    onSuccess: () => {
-      clearPasswords();
-      enqueueSnackbar('Password changed successfully.', { variant: 'success' });
-    },
-    onError: (error) => {
+    onError: (error, updatedUser, context) => {
       console.log(error);
-      enqueueSnackbar(`${error.response.data.message}`, { variant: 'error' });
+      queryClient.setQueryData(['session-user'], context.previousUser);
+      alert(error.response.data.code);
     },
   });
-};
-
-export const useUserCount = () => {
-  return useQuery(['user-count'], settingsService.fetchUserCount, { placeholderData: 1 });
 };

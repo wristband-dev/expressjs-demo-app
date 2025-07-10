@@ -3,6 +3,7 @@ import {
   Button,
   Container,
   FormControl,
+  Grid,
   InputLabel,
   MenuItem,
   Select,
@@ -21,15 +22,15 @@ export function InviteUserForm() {
 
   const { data: assignableRoleOptions } = settingsHooks.useAssignableRoleOptions();
   const { data: invites, error, isFetching, isInitialLoading } = settingsHooks.useNewUserInvites();
-  const { data: userCount } = settingsHooks.useUserCount();
   const { mutate: cancelNewUserInvite } = settingsHooks.useCancelNewUserInvite();
   const { mutate: createNewUserInvite } = settingsHooks.useCreateNewUserInvite();
-  const userLimitReached = userCount > 2;
   const { items, totalResults } = invites;
   const hasExistingInvite = totalResults > 0;
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const isSmall = useMediaQuery(theme.breakpoints.up('sm'));
+  const flexInputPadding = isSmall ? '0.5rem' : '0';
 
   useEffect(() => {
     if (!!assignableRoleOptions.length && !assignedRole) {
@@ -65,16 +66,9 @@ export function InviteUserForm() {
 
   return (
     <form>
-      {userLimitReached && (
-        <Typography margin="1rem 0">
-          You have reached the maximum number of users for your current plan. To add more users, consider upgrading your
-          plan.
-        </Typography>
-      )}
-      {!userLimitReached && (
-        <>
-          <Typography margin="1rem 0">Send an invite to add admins or viewers to Invotastic.</Typography>
-          <FormControl variant="standard" fullWidth sx={{ margin: '0.75rem auto' }}>
+      <Grid container margin="0.75rem auto" display="flex">
+        <Grid item xs={12} sm={6} margin="0.75rem auto" paddingRight={flexInputPadding}>
+          <FormControl variant="standard" fullWidth>
             <TextField
               id="admin-email"
               label="Admin Email"
@@ -86,15 +80,15 @@ export function InviteUserForm() {
               onChange={(event) => setAdminEmail(event.target.value)}
             />
           </FormControl>
-          <FormControl variant="standard" fullWidth sx={{ margin: '0.75rem auto' }}>
+        </Grid>
+        <Grid item xs={12} sm={6} margin="0.75rem auto" paddingLeft={flexInputPadding}>
+          <FormControl variant="standard" fullWidth>
             <InputLabel id="assigned-role-label">Assigned Role</InputLabel>
             <Select
               labelId="assigned-role-label"
               id="assigned-role"
               value={assignedRole}
-              onChange={(event) => {
-                setAssignedRole(event.target.value);
-              }}
+              onChange={(event) => setAssignedRole(event.target.value)}
             >
               {!!assignableRoleOptions.length &&
                 assignableRoleOptions.map((option) => (
@@ -104,22 +98,21 @@ export function InviteUserForm() {
                 ))}
             </Select>
           </FormControl>
-          <Container sx={{ display: 'flex', justifyContent: 'center', margin: '2rem auto', width: '10rem' }}>
-            <Button
-              fullWidth
-              variant="contained"
-              disabled={isFetching || !adminEmail || !assignedRole}
-              onClick={inviteUser}
-            >
-              INVITE
-            </Button>
-          </Container>
-        </>
-      )}
-      {!userLimitReached && hasExistingInvite && (
+        </Grid>
+      </Grid>
+      <Container sx={{ display: 'flex', justifyContent: 'center', margin: '2rem auto', width: '10rem' }}>
+        <Button
+          fullWidth
+          variant="contained"
+          disabled={isFetching || !adminEmail || !assignedRole}
+          onClick={inviteUser}
+        >
+          INVITE
+        </Button>
+      </Container>
+      {hasExistingInvite && (
         <>
-          <Typography margin="1rem 0">The invitation email has been sent to:</Typography>
-
+          <Typography margin="1rem 0">An invitation email has been sent to:</Typography>
           <Box sx={{ margin: '1rem 0' }}>
             {items.map((item, index) => (
               <Box

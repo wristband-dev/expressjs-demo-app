@@ -2,32 +2,34 @@
 
 const express = require('express');
 const path = require('path');
+const { getIronSession } = require('iron-session');
 
-const ironSession = require('./middleware/init-iron-session');
 const errorHandler = require('./middleware/error-handler');
 const routes = require('./routes/index');
-const { SESSION_COOKIE_NAME, SESSION_COOKIE_SECRET } = require('./utils/constants');
+const { SESSION_COOKIE_NAME } = require('./utils/constants');
 
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// 30 minute cookie-based session
-// NOTE: If deploying your own app to production, do not disable secure cookies.
-app.use(
-  ironSession({
+// Enable encrypted cookie-based sessions
+app.use(async (req, res, next) => {
+  req.session = await getIronSession(req, res, {
     cookieName: SESSION_COOKIE_NAME,
-    password: SESSION_COOKIE_SECRET,
+    password: 'dummyval-b5c1-463a-812c-0d8db87c0ec5', // 32-character minimum
     cookieOptions: {
       httpOnly: true,
-      maxAge: 1800,
+      maxAge: 1800, // The expiration time of the cookie in seconds -> 30 min
       path: '/',
       sameSite: true,
+      // IMPORTANT: "secure" should only be set to false for development environments where HTTPS
+      // is not enabled on the server.
       secure: false,
     },
-  })
-);
+  });
+  next();
+});
 
 // Defined routes for all API endpoint/non-static assets
 app.use('/api', routes);

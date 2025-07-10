@@ -1,3 +1,35 @@
 {
-  "invoices": []
+  "invoices": [
+    {
+      "id": "2285e6e497cf7b18",
+      "companyId": "6qn3movx3fgtloh2qjut5s4nha",
+      "customerName": "Another",
+      "customerEmail": "me@me.me",
+      "invoiceDate": "2025-07-07",
+      "message": "This is a test",
+      "totalDue": "123.45",
+      "status": "CANCELLED",
+      "createdBy": "pbiafsut7jg53jvjjp3o4ugufu"
+    },
+    {
+      "id": "2bf8b079c3c288e4",
+      "companyId": "6qn3movx3fgtloh2qjut5s4nha",
+      "customerName": "New Invoice",
+      "customerEmail": "me@me.me",
+      "totalDue": "23423.00",
+      "invoiceDate": "2025-07-07",
+      "status": "SENT",
+      "createdBy": "pbiafsut7jg53jvjjp3o4ugufu"
+    },
+    {
+      "id": "e608a903fe771bcf",
+      "companyId": "6qn3movx3fgtloh2qjut5s4nha",
+      "customerName": "Another one",
+      "customerEmail": "dj@khaled.com",
+      "totalDue": "42069.00",
+      "invoiceDate": "2025-07-08",
+      "status": "SENT",
+      "createdBy": "pbiafsut7jg53jvjjp3o4ugufu"
+    }
+  ]
 }

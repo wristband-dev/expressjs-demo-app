@@ -5,16 +5,8 @@
 
 const apiClient = require('../client/api-client');
 
-exports.cancelEmailChange = async function (changeEmailRequestId, requestConfig) {
-  await apiClient.post('/change-email/cancel-email-change', { changeEmailRequestId }, requestConfig);
-};
-
 exports.cancelNewUserInvite = async function (newUserInvitationRequestId, requestConfig) {
   await apiClient.post(`/new-user-invitation/cancel-invite`, { newUserInvitationRequestId }, requestConfig);
-};
-
-exports.changePassword = async function (userId, currentPassword, newPassword, requestConfig) {
-  await apiClient.post(`/change-password`, { userId, currentPassword, newPassword }, requestConfig);
 };
 
 exports.getAssignableRoleOptions = async function (tenantId, requestConfig) {
@@ -31,12 +23,6 @@ exports.getAssignedRole = async function (userId, requestConfig) {
   return totalResults > 0 ? items[0] : null;
 };
 
-exports.getChangeEmailRequestsForUser = async function (userId, requestConfig) {
-  const statusQuery = encodeURIComponent(`status ne "CANCELED" and status ne "COMPLETED"`);
-  const response = await apiClient.get(`/users/${userId}/change-email-requests?query=${statusQuery}`, requestConfig);
-  return response.data;
-};
-
 exports.getIdentityProviderByNameForTenant = async function (tenantId, identityProviderName, requestConfig) {
   const nameQuery = `names=${identityProviderName}`;
   const path = `/tenants/${tenantId}/identity-providers/resolve-overrides?${nameQuery}`;
@@ -48,12 +34,6 @@ exports.getNewUserInviteRequestsForTenant = async function (tenantId, requestCon
   const statusFilter = `?query=${encodeURIComponent(`status eq "PENDING_INVITE_ACCEPTANCE"`)}`;
   const path = `/tenants/${tenantId}/new-user-invitation-requests${statusFilter}`;
   const response = await apiClient.get(path, requestConfig);
-  return response.data;
-};
-
-exports.getPasswordPolicyForTenant = async function (tenantId, requestConfig) {
-  const path = `/tenants/${tenantId}/password-policies/resolve-overrides`;
-  const response = await apiClient.post(path, null, requestConfig);
   return response.data;
 };
 
@@ -75,7 +55,6 @@ exports.getTenant = async function (tenantId, requestConfig) {
     id: tenantId,
     displayName: tenant.displayName,
     domainName: tenant.domainName,
-    address: { ...tenant.publicMetadata.address },
     invoiceEmail: tenant.publicMetadata.invoiceEmail,
   };
 };
@@ -83,11 +62,6 @@ exports.getTenant = async function (tenantId, requestConfig) {
 exports.getUser = async function (userId, requestConfig) {
   const response = await apiClient.get(`/users/${userId}`, requestConfig);
   return response.data;
-};
-
-exports.getUserCountForTenant = async function (tenantId, requestConfig) {
-  const response = await apiClient.get(`/tenants/${tenantId}/users?count=0`, requestConfig);
-  return response.data.totalResults;
 };
 
 exports.getUserSchemaForTenant = async function (tenantId, requestConfig) {
@@ -100,10 +74,6 @@ exports.inviteNewUser = async function (tenantId, email, roleId, requestConfig) 
   await apiClient.post(`/new-user-invitation/invite-user`, inviteData, requestConfig);
 };
 
-exports.requestEmailChange = async function (userId, newEmail, requestConfig) {
-  await apiClient.post('/change-email/request-email-change', { userId, newEmail }, requestConfig);
-};
-
 exports.updateTenant = async function (tenantId, tenantData, requestConfig) {
   const tenantResponse = await apiClient.patch(`/tenants/${tenantId}`, tenantData, requestConfig);
   const tenant = tenantResponse.data;
@@ -112,7 +82,6 @@ exports.updateTenant = async function (tenantId, tenantData, requestConfig) {
     id: tenantId,
     displayName: tenant.displayName,
     domainName: tenant.domainName,
-    address: { ...tenant.publicMetadata.address },
     invoiceEmail: tenant.publicMetadata.invoiceEmail,
   };
 };

@@ -11,7 +11,7 @@ const {
   NOT_FOUND,
   InvoiceStatus,
 } = require('../utils/constants');
-const { addressToTextBlock, bearerToken, hasAccessToApi } = require('../utils/util');
+const { bearerToken, hasAccessToApi } = require('../utils/util');
 
 exports.createInvoice = async (req, res, next) => {
   try {
@@ -41,11 +41,9 @@ exports.createInvoice = async (req, res, next) => {
       return res.status(400).json({ code: INVALID_REQUEST, message: 'Company could not be found.' });
     }
 
-    const { address, invoiceEmail } = existingCompany;
     const createdInvoice = await invotasticService.createInvoice({
       ...req.body,
-      fromEmail: invoiceEmail,
-      fromAddress: addressToTextBlock(address),
+      invoiceDate: new Date().toISOString().split('T')[0],
       status: InvoiceStatus.SENT,
       createdBy: userId,
     });

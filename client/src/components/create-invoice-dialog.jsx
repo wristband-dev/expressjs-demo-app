@@ -8,7 +8,7 @@ const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export function CreateInvoiceDialog({ handleClose, invoiceNumber, open }) {
+export function CreateInvoiceDialog({ handleClose, open }) {
   return (
     <Dialog fullScreen={true} open={open} onClose={handleClose} TransitionComponent={Transition}>
       <AppBar position="sticky">
@@ -17,7 +17,7 @@ export function CreateInvoiceDialog({ handleClose, invoiceNumber, open }) {
             <CloseIcon />
           </IconButton>
           <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-            New Invoice - {invoiceNumber}
+            New Invoice (Due on Receipt)
           </Typography>
         </Toolbar>
       </AppBar>
@@ -26,7 +26,7 @@ export function CreateInvoiceDialog({ handleClose, invoiceNumber, open }) {
           <Grid item xs={1} sm={2} />
           <Grid item xs={10} sm={8}>
             <DialogContent>
-              <CreateInvoiceForm closeFormDialog={handleClose} invoiceNumber={invoiceNumber} />
+              <CreateInvoiceForm closeFormDialog={handleClose} />
             </DialogContent>
           </Grid>
           <Grid item xs={1} sm={2} />

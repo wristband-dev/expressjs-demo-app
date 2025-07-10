@@ -2,18 +2,21 @@
 
 const express = require('express');
 
-const authRoutes = require('./auth-routes');
-const apiRoutes = require('./api/index');
-const authMiddleware = require('../middleware/auth-middleware');
+const apiV1Routes = require('./v1');
+const authController = require('../controllers/auth-controller');
 
 const router = express.Router();
 
-// All APIs that are called from an unauthenticated state.
-router.use('/auth', authRoutes);
+/**
+ * All public auth APIs that are called from an unauthenticated state.
+ */
+router.get('/auth/login', authController.login);
+router.get('/auth/callback', authController.authCallback);
+router.get('/auth/logout', authController.logout);
 
-/* WRISTBAND_TOUCHPOINT - AUTHENTICATION */
-// The middlewares here ensure that an authenticated user's JWTs/session data/CSRF token exists
-// and are valid.
-router.use('/v1', [authMiddleware], apiRoutes);
+/**
+ * Routes that will be protected EITHER by the session cookie OR by an access token.
+ */
+router.use('/v1', apiV1Routes);
 
 module.exports = router;
