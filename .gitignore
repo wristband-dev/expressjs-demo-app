@@ -20,11 +20,15 @@ node_modules/
 
 # Build Assets
 client/build/
+frontend/build/
 server/build/
+backend/build/
 
 dist/
 client/dist/
+frontend/dist/
 server/dist/
+backend/dist/
 **/dist/
 
 target/
@@ -59,6 +63,7 @@ Thumbs.db
 
 # LowDB Invotastic Database file
 db.json
+backend/db.json
 server/db.json
 **/db.json
 

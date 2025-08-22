@@ -47,7 +47,7 @@ First thing is first: make sure you sign up for an Wristband account at [https:/
 After your Wristband account is set up, log in to the Wristband dashboard.  Once you land on the home page of the dashboard, click the button labeled "Add Demo App".  Make sure you choose the following options:
 
 - Step 1: Subject to Authenticate - Humans
-- Step 2: Client Framework - Express
+- Step 2: Application Framework - Express Backend, React Frontend
 
 You can also follow the [Demo App Guide](https://docs.wristband.dev/docs/setting-up-a-demo-app) for more information.
 
@@ -59,14 +59,14 @@ After completing demo app creation, you will be prompted with values that you sh
 - `CLIENT_ID`
 - `CLIENT_SECRET`
 
-Copy those values, then create an environment variable file on the server at: `server/.env`. Once created, paste the copied values into this file.
+Copy those values, then create an environment variable file on the server at: `backend/.env`. Once created, paste the copied values into this file.
 
 ### 4) Install dependencies
 
 Before attempting to run the application, you'll need to install all project dependencies for both Express and React. From the root directory of this repo, run the following to install dependencies:
 
 ```bash
-npm run install-all
+npm run setup
 ```
 
 ### 5) Run the application in "production" mode 
@@ -74,15 +74,15 @@ npm run install-all
 > [!WARNING]
 > Make sure you are in the root directory of this repository.
 
-#### Build the client application bundle
+#### Build the frontend
 
-Build the React asset bundle that will be served up by Express (asset bundle target location is `server/dist/`):
+Build the React asset bundle that will be served up by Express (asset bundle target location is `backend/dist/`):
 
 ```bash
 npm run build
 ```
 
-#### Run the Express server
+#### Run the Express backend
 
 Start up the server in "production" mode. This lets Express serve the React static assets bundle, and it runs on port `6001`.
 

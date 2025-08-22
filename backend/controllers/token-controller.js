@@ -9,5 +9,8 @@ exports.getToken = async (req, res) => {
   res.header('Cache-Control', 'no-store');
   res.header('Pragma', 'no-cache');
 
-  return res.status(200).json({ accessToken, expiresAt });
+  return res.status(200).json({
+    accessToken, // required field
+    expiresAt, // required field
+  });
 };

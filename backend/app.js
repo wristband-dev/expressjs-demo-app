@@ -23,9 +23,8 @@ app.use(async (req, res, next) => {
       maxAge: 1800, // The expiration time of the cookie in seconds -> 30 min
       path: '/',
       sameSite: true,
-      // IMPORTANT: "secure" should only be set to false for development environments where HTTPS
-      // is not enabled on the server.
-      secure: false,
+      // IMPORTANT: "secure" should be set to true in production.
+      secure: true,
     },
   });
   next();

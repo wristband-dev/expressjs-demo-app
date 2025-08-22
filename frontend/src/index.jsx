@@ -35,9 +35,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           {/* WRISTBAND_TOUCHPOINT - AUTHENTICATION */}
           <WristbandAuthProvider
             loginUrl="/api/auth/login"
-            logoutUrl="/api/auth/logout"
             sessionUrl="/api/v1/session"
             tokenUrl="/api/v1/token"
+            disableRedirectOnUnauthenticated
             // This function shows how you could combine an external state management library like React
             // Query (if desired) in combination with Wristband's React SDK.
             onSessionSuccess={(sessionResponse) => {
