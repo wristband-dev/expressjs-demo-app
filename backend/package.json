@@ -1,6 +1,6 @@
 {
-  "name": "expressjs-demo-app--server",
-  "description": "NodeJS server backend that orchestrates API requests from the multi-tenant demo single page app.",
+  "name": "expressjs-demo-app--backend",
+  "description": "Express backend server that handles all API requests coming from the React frontend.",
   "author": "Wristband",
   "version": "0.1.0",
   "private": true,

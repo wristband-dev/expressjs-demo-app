@@ -17,6 +17,7 @@ exports.updateCsrfCookie = function (req, res) {
     maxAge: 1800000,
     path: '/',
     sameSite: true,
-    secure: false,
+    // IMPORTANT: "secure" should be set to true in production.
+    secure: true,
   });
 };

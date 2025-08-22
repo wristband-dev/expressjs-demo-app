@@ -26,9 +26,9 @@ exports.session = async (req, res, next) => {
     }
 
     return res.status(200).json({
-      userId,
-      tenantId,
-      metadata: { user, assignedRole, company },
+      userId, // required field
+      tenantId, // required field
+      metadata: { user, assignedRole, company }, // metadata is optional
     });
   } catch (error) {
     return next(error);
