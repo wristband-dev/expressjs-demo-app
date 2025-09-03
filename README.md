@@ -61,30 +61,25 @@ After completing demo app creation, you will be prompted with values that you sh
 
 Copy those values, then create an environment variable file on the server at: `backend/.env`. Once created, paste the copied values into this file.
 
-### 4) Install dependencies
+### 4) Install dependencies and build artifacts
 
-Before attempting to run the application, you'll need to install all project dependencies for both Express and React. From the root directory of this repo, run the following to install dependencies:
+> [!WARNING]
+> Make sure you are in the root directory of this repository.
+
+Before attempting to run the application, you'll need to setup the project. From the root directory of this repo, run the following:
 
 ```bash
 npm run setup
 ```
 
+This command will do the following:
+- Clean old build artifacts
+- Install all dependencies for both React and Express
+- Build the React asset bundle that will be served up by Express (asset bundle target location is `backend/dist/`)
+
 ### 5) Run the application in "production" mode 
 
-> [!WARNING]
-> Make sure you are in the root directory of this repository.
-
-#### Build the frontend
-
-Build the React asset bundle that will be served up by Express (asset bundle target location is `backend/dist/`):
-
-```bash
-npm run build
-```
-
-#### Run the Express backend
-
-Start up the server in "production" mode. This lets Express serve the React static assets bundle, and it runs on port `6001`.
+Start up the Express server in "production" mode. This lets Express serve the React static assets bundle, and it runs on port `6001`.
 
 ```bash
 npm start

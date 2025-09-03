@@ -3,7 +3,7 @@
     "es6": true
   },
   "extends": ["airbnb-base", "prettier", "plugin:node/recommended"],
-  "plugins": ["prettier"],
+  "plugins": ["prettier", "node"],
   "parserOptions": {
     "ecmaVersion": "latest",
     "sourceType": "script"

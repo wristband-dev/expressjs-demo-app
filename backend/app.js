@@ -37,7 +37,7 @@ app.use('/api', routes);
 if (process.env.NODE_ENV === 'production') {
   console.info('Production ENV detected. Serving up static assets.');
   app.use(express.static(path.join(__dirname, 'dist')));
-  app.get('*', (req, res) => {
+  app.get('{*catchAll}', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'dist', 'index.html'));
   });
 }

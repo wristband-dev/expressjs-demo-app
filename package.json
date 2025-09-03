@@ -1,6 +1,6 @@
 {
   "name": "expressjs-demo-app--parent",
-  "description": "Parent package for both the Invotastic for Business React frontend and the Express backend server. This is a set convenience scripts for running the demo from the project root directory.",
+  "description": "Parent package for both the Demo App React frontend and the Express backend server. This is a set convenience scripts for running the demo from the project root directory.",
   "author": "Wristband",
   "version": "0.1.0",
   "private": true,
@@ -14,7 +14,7 @@
     "dev": "concurrently \"npm start --prefix frontend\" \"npm run dev --prefix backend\"",
     "lint": "npm run lint --prefix frontend; npm run lint --prefix backend",
     "prepare": "husky",
-    "setup": "npm install; npm install --prefix frontend; npm install --prefix backend",
+    "setup": "npm run clean; npm install; npm install --prefix frontend; npm install --prefix backend; npm run build",
     "start": "npm start --prefix backend"
   },
   "devDependencies": {

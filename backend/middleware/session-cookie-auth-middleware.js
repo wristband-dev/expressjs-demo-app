@@ -23,8 +23,7 @@ const sessionCookieAuthMiddleware = async function (req, res, next) {
     const tokenData = await wristbandAuth.refreshTokenIfExpired(refreshToken, expiresAt);
     if (tokenData) {
       req.session.accessToken = tokenData.accessToken;
-      // Convert the "expiresIn" seconds into an expiration date with the format of milliseconds from the epoch.
-      req.session.expiresAt = Date.now() + tokenData.expiresIn * 1000;
+      req.session.expiresAt = tokenData.expiresAt;
       req.session.refreshToken = tokenData.refreshToken;
     }
 
