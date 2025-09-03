@@ -61,7 +61,7 @@ Thumbs.db
 *.mov
 *.wmv
 
-# LowDB Invotastic Database file
+# LowDB Database file
 db.json
 backend/db.json
 server/db.json

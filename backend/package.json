@@ -17,10 +17,10 @@
     "lint:fix": "eslint . --ext .js --fix"
   },
   "dependencies": {
-    "@wristband/express-auth": "^4.0.0",
+    "@wristband/express-auth": "^4.1.0",
     "@wristband/typescript-jwt": "^0.1.0",
     "agentkeepalive": "^4.6.0",
-    "axios": "^1.10.0",
+    "axios": "^1.11.0",
     "dotenv": "^16.4.1",
     "express": "^4.21.2",
     "express-validator": "^7.0.1",
@@ -32,7 +32,6 @@
   "devDependencies": {
     "eslint": "^8.57.1",
     "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-config-node": "^4.1.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-node": "^11.1.0",

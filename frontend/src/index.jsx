@@ -37,7 +37,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             loginUrl="/api/auth/login"
             sessionUrl="/api/v1/session"
             tokenUrl="/api/v1/token"
-            disableRedirectOnUnauthenticated
             // This function shows how you could combine an external state management library like React
             // Query (if desired) in combination with Wristband's React SDK.
             onSessionSuccess={(sessionResponse) => {

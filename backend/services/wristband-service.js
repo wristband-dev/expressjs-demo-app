@@ -23,13 +23,6 @@ exports.getAssignedRole = async function (userId, requestConfig) {
   return totalResults > 0 ? items[0] : null;
 };
 
-exports.getIdentityProviderByNameForTenant = async function (tenantId, identityProviderName, requestConfig) {
-  const nameQuery = `names=${identityProviderName}`;
-  const path = `/tenants/${tenantId}/identity-providers/resolve-overrides?${nameQuery}`;
-  const response = await apiClient.post(path, null, requestConfig);
-  return response.data.items[0].item;
-};
-
 exports.getNewUserInviteRequestsForTenant = async function (tenantId, requestConfig) {
   const statusFilter = `?query=${encodeURIComponent(`status eq "PENDING_INVITE_ACCEPTANCE"`)}`;
   const path = `/tenants/${tenantId}/new-user-invitation-requests${statusFilter}`;
