@@ -14,7 +14,7 @@
     "dev": "concurrently \"npm start --prefix frontend\" \"npm run dev --prefix backend\"",
     "lint": "npm run lint --prefix frontend; npm run lint --prefix backend",
     "prepare": "husky",
-    "setup": "npm install; npm install --prefix frontend; npm install --prefix backend",
+    "setup": "npm run clean; npm install; npm install --prefix frontend; npm install --prefix backend; npm run build",
     "start": "npm start --prefix backend"
   },
   "devDependencies": {
