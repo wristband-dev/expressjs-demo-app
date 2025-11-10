@@ -5,6 +5,10 @@ import { TouchpointChip, ProfileSettingsForm, InviteUserForm } from 'components'
 import { sessionHooks } from 'hooks';
 import { isOwnerRole } from 'utils';
 
+const PROTECTION_MESSAGE =
+  'All API interactions on this page are protected with your session cookie.' +
+  'Only admins with the "Owner" role can invite admins.';
+
 export function SettingsPage() {
   const { data: company } = sessionHooks.useSessionCompany();
   const { data: role } = sessionHooks.useSessionRole();
@@ -15,8 +19,7 @@ export function SettingsPage() {
       <Grid item xs={12} marginTop="3rem" textAlign="center">
         <Typography fontSize="2rem">Settings</Typography>
         <Typography sx={{ margin: '1rem auto 0', padding: '0 2rem', maxWidth: '800px', textAlign: 'left' }}>
-          {`All API interactions on this page are protected with your session cookie and CSRF token.
-          Only admins with the "Owner" role can invite admins.`}
+          {PROTECTION_MESSAGE}
         </Typography>
       </Grid>
       <Grid container item xs={12} margin="1rem 0 2rem">

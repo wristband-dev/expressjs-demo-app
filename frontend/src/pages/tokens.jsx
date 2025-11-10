@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Container, Grid, Typography } from '@mui/material';
 import { useWristbandToken } from '@wristband/react-client-auth';
 
@@ -7,6 +7,8 @@ import { sessionHooks } from 'hooks';
 import { isOwnerRole } from 'utils';
 
 export function AccessTokensPage() {
+  const [helloMsg, setHelloMsg] = useState('');
+
   /* WRISTBAND_TOUCHPOINT - AUTHENTICATION */
   const { clearToken, getToken } = useWristbandToken();
 
@@ -16,7 +18,7 @@ export function AccessTokensPage() {
     try {
       const token = await getToken();
       const message = await helloWorldService.fetchHelloWorld(token);
-      alert(message);
+      setHelloMsg(`You said "${message}" at ${new Date().toString().split(' GMT')[0]}`);
     } catch (error) {
       console.error(error);
       clearToken();
@@ -42,6 +44,11 @@ export function AccessTokensPage() {
           <Button disabled={!isOwnerRole(role.name)} variant="contained" fullWidth onClick={getHelloWorld}>
             HELLO WORLD
           </Button>
+        </Container>
+        <Container sx={{ display: 'flex', justifyContent: 'center', margin: '2rem auto 0' }}>
+          <Typography fontSize="1.25rem" padding="1rem">
+            {helloMsg}
+          </Typography>
         </Container>
       </Grid>
     </Grid>

@@ -25,8 +25,7 @@ export function HomePage() {
       <Grid item xs={12} marginTop="3rem" textAlign="center">
         <Typography fontSize="2rem">Send (fake) fantastic invoices.</Typography>
         <Typography sx={{ margin: '1rem auto 0', padding: '0 2rem', maxWidth: '800px', textAlign: 'left' }}>
-          {`All API interactions on this page are protected with your session cookie and CSRF token. Only
-          admins with the "Owner" role can create and cancel invoices.`}
+          {`All API interactions on this page are protected with your session cookie. Only admins with the "Owner" role can create and cancel invoices.`}
         </Typography>
       </Grid>
       <Grid container item xs={12} marginBottom="2rem">

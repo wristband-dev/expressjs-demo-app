@@ -21,14 +21,9 @@
 
 <br/>
 
-# Invotastic for Business (ExpressJS) -- A multi-tenant demo app
+# Wristband Multi-Tenant Demo App for ExpressJS
 
-"Invotastic for Business" is a Wristband multi-tenant demo app that serves other companies as its customers. This repo utilizes the Backend Server integration pattern. It consists of ExpressJS server that hosts and serves up a React single-page application to the browser upon request.
-<br>
-<br>
-
-> **Disclaimer:**
-> Invotastic for Business is not a real-world application and cannot be used to send invoices to real people.
+This is a multi-tenant demo app that serves other companies as its customers. This repo utilizes the Backend Server integration pattern. It consists of ExpressJS server that hosts and serves up a React single-page application to the browser upon request.
 
 <br>
 <hr />
@@ -136,9 +131,9 @@ Below is a quick overview of how this demo app interacts with Wristband.
   <img alt="entity model" src="https://assets.wristband.dev/docs/b2b-expressjs-demo-app/b2b-expressjs-demo-app-entity-model-light.png">
 </picture>
 
-The entity model starts at the top with an application that encapsulates everything related to Invotastic for Business.  The application has the Wristband identity provider enabled by default so that all users can login with an email and a password.  The application has one OAuth2 client through which users will be authenticated.  In this case, the client is an Express server.
+The entity model starts at the top with an application that encapsulates everything related to this demo app.  The application has the Wristband identity provider enabled by default so that all users can login with an email and a password.  The application has one OAuth2 client through which users will be authenticated.  In this case, the client is an Express server.
 
-Companies that signup with Invotastic for Business will be provisioned a tenant under the application (1 company = 1 tenant). When a new user signs up their company, they are assigned the "Owner" role by default and have full access to their company resources.  Owners of a company can also invite new users into their company.  Invited users can be assigned either the "Owner" role or the "Viewer" role.  A user that is assigned the "Viewer" role can't perform the following operations:
+Companies that signup with the demo app will be provisioned a tenant under the application (1 company = 1 tenant). When a new user signs up their company, they are assigned the "Owner" role by default and have full access to their company resources.  Owners of a company can also invite new users into their company.  Invited users can be assigned either the "Owner" role or the "Viewer" role.  A user that is assigned the "Viewer" role can't perform the following operations:
 
 - Create new invoices
 - Cancel invoices
@@ -159,15 +154,12 @@ The application in this repository utilizes the Backend for Frontend (BFF) patte
 - Handling the OAuth2 authorization code flow redirections to and from Wristband during user login.
 - Creating the application session cookie to be sent back to the browser upon successful login.  The application session cookie contains the access and refresh tokens as well as some basic user info.
 - Refreshing the access token if the access token is expired.
-- Orchestrating all API calls from the React frontend to both Wristband and the Invotastic backend data store.
+- Orchestrating all API calls from the React frontend to both Wristband and the demo app backend data store.
 - Destroying the application session cookie and revoking the refresh token when a user logs out.
 
-API calls made from React to Express pass along the application session cookie and a [CSRF token](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#double-submit-cookie) with every request.  The server has two middlewares for all protected routes responsbile for:
+API calls made from React to Express pass along the application session cookie with every request.  The server uses an auth middleware for all protected routes to validate the session and refresh the access token (if necessary).
 
-- Validating the session and refreshing the access token (if necessary)
-- Validating the CSRF token
-
-For any Invotastic-specific APIs (i.e. invoice APIs), the server will perform an authorization check before processing the API request by checking against the permissions assigned to the session user's role.
+For any demo-specific APIs (i.e. invoice APIs), the server will perform an authorization check before processing the API request by checking against the permissions assigned to the session user's role.
 
 It is also important to note that Wristband hosts all onboarding workflow pages (signup, login, etc), and the Express server will redirect to Wristband in order to show users those pages.
 
@@ -176,10 +168,10 @@ It is also important to note that Wristband hosts all onboarding workflow pages 
 Within the demo app code base, you can search in your IDE of choice for the text `WRISTBAND_TOUCHPOINT`.  This will show the various places in both the React frontend code and Express backend code where Wristband is involved.  You will find the search results return one of a few possible comments using that search text:
 
 - `/* WRISTBAND_TOUCHPOINT - AUTHENTICATION */` - Code that deals with an authenticated user's application session.  This includes managing their application session cookie and JWTs, OAuth2-related endpoints for login/callback/logout, middleware for validating/refreshing tokens, and React context used to check if the user is authenticated.
-- `/* WRISTBAND_TOUCHPOINT - AUTHORIZATION */` - Code that checks whether a user has the required permissions to interact with Invotastic-specific resource APIs or can access certain application functionality in the UI.
+- `/* WRISTBAND_TOUCHPOINT - AUTHORIZATION */` - Code that checks whether a user has the required permissions to interact with demo-specific resource APIs or can access certain application functionality in the UI.
 - `/* WRISTBAND_TOUCHPOINT - RESOURCE API */` - Code that interacts with any Wristband-specific resource APIs or workflow APIs that are not related to authentication or authorization directly.  For example, it could be an API call to update the user's profile or change their password.
 
-There are also some visual cues in the Invotastic for Business UI that indicate if certain forms or buttons will trigger the execution of code that runs through any of the touchpoint categories above. For example, if we look at the Invite Admins UI:
+There are also some visual cues in the demo app UI that indicate if certain forms or buttons will trigger the execution of code that runs through any of the touchpoint categories above. For example, if we look at the Invite Admins UI:
 <br>
 <br>
 
@@ -214,19 +206,6 @@ This demo app is leveraging the [Wristband express-auth SDK](https://github.com/
 ## Wristband React Client Auth SDK
 
 This demo app is leveraging the [Wristband react-client-auth SDK](https://github.com/wristband-dev/react-client-auth) for any authenticated session interaction in the React frontend. Refer to that GitHub repository for more information.
-
-<br/>
-
-## CSRF Protection
-
-Cross Site Request Forgery (CSRF) is a security vulnerability where attackers trick authenticated users into unknowingly submitting malicious requests to your application. This demo app is leveraging a technique called the Syncrhonizer Token Pattern to mitigate CSRF attacks by employing two cookies: a session cookie for user authentication and a CSRF token cookie containing a unique token. With each request, the CSRF token is included both in the cookie and the request payload, enabling server-side validation to prevent CSRF attacks.
-
-Refer to the [OWASP CSRF Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html) for more information about this topic.
-
-> [!WARNING]
-> Your own application should take effort to mitigate CSRF attacks in addition to any Wristband authentication, and it is highly recommended to take a similar approach as this demo app to protect against thse types of attacks.
-
-Within the demo app code base, you can search in your IDE of choice for the text `CSRF_TOUCHPOINT`.  This will show the various places in both the React frontend code and Express backend code where CSRF is involved.
 
 <br/>
 

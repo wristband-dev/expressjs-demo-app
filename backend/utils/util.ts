@@ -1,22 +1,22 @@
-'use strict';
+import { Request } from 'express';
 
-exports.getValueForDeletableField = (value) => {
+export function getValueForDeletableField(value: string | null | undefined): string | null | undefined {
   if (value === null || value === '') {
     return null;
   }
 
   return value || undefined;
-};
+}
 
-exports.bearerToken = (req) => {
+export function bearerToken(req: Request): { headers: { Authorization: string } } {
   if (!req || !req.session || !req.session.accessToken) {
     throw new Error('No access token found in session for auth header.');
   }
 
   return { headers: { Authorization: `Bearer ${req.session.accessToken}` } };
-};
+}
 
-exports.hasAccessToApi = (requiredPermissions = [], currentPermissions = []) => {
+export function hasAccessToApi(requiredPermissions: string[] = [], currentPermissions: string[] = []): boolean {
   if (!requiredPermissions.length || !currentPermissions.length) {
     return false;
   }
@@ -24,4 +24,4 @@ exports.hasAccessToApi = (requiredPermissions = [], currentPermissions = []) => 
   return currentPermissions.every((currentPermission) => {
     return requiredPermissions.includes(currentPermission);
   });
-};
+}
