@@ -1,14 +1,12 @@
-'use strict';
-
-const axios = require('axios');
-const Agent = require('agentkeepalive');
-const https = require('node:https');
+import axios from 'axios';
+import https from 'https';
+import { HttpAgent } from 'agentkeepalive';
 
 const JSON_MEDIA_TYPE = 'application/json;charset=UTF-8';
 
 const apiClient = axios.create({
   baseURL: `https://${process.env.APPLICATION_VANITY_DOMAIN}/api/v1`,
-  httpAgent: new Agent({
+  httpAgent: new HttpAgent({
     maxSockets: 100,
     maxFreeSockets: 10,
     timeout: 60000,
@@ -20,4 +18,4 @@ const apiClient = axios.create({
   maxRedirects: 0,
 });
 
-module.exports = apiClient;
+export default apiClient;

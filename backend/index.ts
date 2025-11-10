@@ -1,12 +1,15 @@
-'use strict';
+import http from 'http';
+import stoppable from 'stoppable';
 
-const http = require('http');
-const stoppable = require('stoppable');
+import app from './app';
 
-const app = require('./app');
-
-function getServerPort() {
+function getServerPort(): string | number | false {
   const value = process.env.PORT;
+
+  if (!value) {
+    return false;
+  }
+
   const port = parseInt(value, 10);
 
   if (Number.isNaN(port)) {
@@ -25,7 +28,7 @@ app.set('port', port);
 
 const server = stoppable(http.createServer(app));
 
-server.on('error', (error) => {
+server.on('error', (error: any) => {
   if (error.syscall !== 'listen') {
     throw error;
   }
