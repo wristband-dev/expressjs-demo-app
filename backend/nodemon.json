@@ -3,7 +3,7 @@
     "NODE_ENV": "development",
     "PORT": 3001
   },
-  "exec": "node -r dotenv/config --inspect=localhost:9229 --import tsx index.ts",
+  "exec": "node -r dotenv/config --inspect=localhost:9229 --import tsx server.ts",
   "ignore": [".vscode", ".git", "build", "node_modules", "db.json"],
   "verbose": true,
   "ext": "ts,js,json"

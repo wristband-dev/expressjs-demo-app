@@ -16,13 +16,13 @@ interface Role {
 interface Tenant {
   id: string;
   displayName: string;
-  domainName: string;
+  name: string;
   invoiceEmail: string;
 }
 
 interface TenantResponse {
   displayName: string;
-  domainName: string;
+  name: string;
   publicMetadata: {
     invoiceEmail: string;
   };
@@ -79,7 +79,7 @@ export async function getTenant(tenantId: string, requestConfig: RequestConfig):
   return {
     id: tenantId,
     displayName: tenant.displayName,
-    domainName: tenant.domainName,
+    name: tenant.name,
     invoiceEmail: tenant.publicMetadata.invoiceEmail,
   };
 }

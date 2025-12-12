@@ -8,7 +8,7 @@ import { bearerToken, hasAccessToApi } from '../utils/util';
 import { InvoiceStatus } from '../types/invoice';
 
 export async function getHelloWorld(req: Request, res: Response) {
-  return res.status(200).json({ message: 'Hello World!' });
+  return res.status(200).json({ message: 'Hello World!', jwtPayload: req.auth });
 }
 
 export async function createInvoice(req: Request, res: Response, next: NextFunction) {

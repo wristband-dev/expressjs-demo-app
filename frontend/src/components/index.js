@@ -5,6 +5,7 @@ export * from './invite-user-form';
 export * from './invoice-table';
 export * from './navbar';
 export * from './profile-settings-form';
+export * from './response-box';
 export * from './side-drawer';
 export * from './touchpoint-badge';
 export * from './touchpoint-chip';

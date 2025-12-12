@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-import { CallbackResultType } from '@wristband/express-auth';
 
 import * as wristbandService from '../services/wristband-service';
 import { bearerToken } from '../utils/util';
@@ -22,19 +21,20 @@ export async function authCallback(req: Request, res: Response) {
   /* WRISTBAND_TOUCHPOINT - AUTHENTICATION */
   // After the user authenticates, exchange the incoming authorization code for JWTs and also retrieve userinfo.
   const callbackResult = await wristbandAuth.callback(req, res);
-  const { callbackData, redirectUrl, type } = callbackResult;
+  const { callbackData, redirectUrl, type, reason } = callbackResult;
 
-  if (type === CallbackResultType.REDIRECT_REQUIRED) {
+  if (type === 'redirect_required') {
     // For certain edge cases, you'll need to redirect to the URL returned from the SDK.
-    return res.redirect(redirectUrl!);
+    console.debug(reason); // Optional: Extra information for debugging purposes
+    return res.redirect(redirectUrl);
   }
 
   // Save any necessary fields for the user's app session into a session cookie.
-  req.session.fromCallback(callbackData!, { customField: 'No pineapple on pizza' });
+  req.session.fromCallback(callbackData, { customField: 'No pineapple on pizza' });
   await req.session.save();
 
   // Send the user back to the application.
-  return res.redirect(callbackData!.returnUrl || 'http://localhost:6001/home');
+  return res.redirect(callbackData.returnUrl || 'http://localhost:6001/home');
 }
 
 /**
