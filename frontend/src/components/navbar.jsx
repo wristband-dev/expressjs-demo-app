@@ -38,16 +38,19 @@ export function Navbar() {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
-    <AppBar position="sticky">
+    <AppBar position="sticky" sx={{ backgroundColor: '#0f172a' }}>
       <Toolbar>
-        <Link to="/">
-          <Box
-            component="img"
-            sx={{ cursor: 'pointer', height: '2.5rem', maxHeight: { xs: '2rem', sm: '2.5rem' } }}
-            alt="Logo"
-            src={Logo}
-          />
-        </Link>
+        <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+          <Link to="/">
+            <Box
+              component="img"
+              sx={{ cursor: 'pointer', height: '2.5rem', maxHeight: { xs: '2rem', sm: '2.5rem' } }}
+              alt="Logo"
+              src={Logo}
+            />
+          </Link>
+          <Typography sx={{ fontSize: '1rem', fontWeight: 600, margin: '0 0.5rem' }}>Express Demo</Typography>
+        </div>
         <Box sx={{ display: 'flex', flexDirection: 'row', marginLeft: 'auto' }}>
           {isMobile ? (
             <SideDrawer />

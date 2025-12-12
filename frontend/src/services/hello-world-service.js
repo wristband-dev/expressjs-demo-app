@@ -9,5 +9,5 @@ const bearerToken = (accessToken) => {
 
 export const fetchHelloWorld = async function (accessToken) {
   const response = await apiClientWithJwt.get(`/v1/hello-world`, bearerToken(accessToken));
-  return response.data.message;
+  return response.data;
 };

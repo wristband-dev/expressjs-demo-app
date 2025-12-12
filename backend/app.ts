@@ -1,7 +1,6 @@
-import express from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import path from 'path';
 
-import { errorHandler } from './middleware/error-handler';
 import appRoutes from './routes/app-routes';
 import authRoutes from './routes/auth-routes';
 import { wristbandSession } from './wristband';
@@ -29,6 +28,21 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 // Catch-all for any unexpected server-side errors.
-app.use(errorHandler);
+app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
+  console.error(error);
+
+  if (error.stack) {
+    console.error(error.stack);
+  }
+
+  if (res.headersSent) {
+    return next(error);
+  }
+
+  return res.status(500).json({
+    code: 'UNEXPECTED_ERROR',
+    message: 'An unexpected error occurred on our end.',
+  });
+});
 
 export default app;

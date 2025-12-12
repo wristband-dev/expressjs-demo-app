@@ -1,6 +1,16 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router';
-import { Divider, Drawer, IconButton, List, ListItem, ListItemText, Typography, styled, useTheme } from '@mui/material';
+import {
+  Divider,
+  Drawer,
+  IconButton,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  useTheme,
+} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import HomeIcon from '@mui/icons-material/Home';
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -8,33 +18,21 @@ import { Key } from '@mui/icons-material';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { redirectToLogout } from '@wristband/react-client-auth';
 
-import { TouchpointBadge } from 'components';
-
-const linkStyle = ({ theme }) => {
-  return {
-    color: theme.palette.primary.main,
-    cursor: 'pointer',
-    display: 'flex',
-    fontSize: '2rem',
-    justifyContent: 'flex-start',
-    paddingLeft: theme.spacing(2),
-    textDecoration: 'none',
-    '& p': {
-      paddingLeft: theme.spacing(1),
-    },
-  };
-};
-const StyledLogoutLink = styled('div')(linkStyle);
-const StyledRouterLink = styled(Link)(linkStyle);
-const StyledListItem = styled(ListItem)(({ theme }) => {
-  return {
-    '&:hover': { backgroundColor: theme.palette.secondary.main },
-  };
-});
-
 export function SideDrawer() {
   const theme = useTheme();
   const [openDrawer, setOpenDrawer] = useState(false);
+
+  const drawerItemSx = {
+    color: theme.palette.text.primary,
+    textDecoration: 'none',
+    '&:hover': {
+      backgroundColor: theme.palette.secondary.main,
+      color: theme.palette.secondary.contrastText,
+      '& .MuiListItemIcon-root': {
+        color: theme.palette.secondary.contrastText,
+      },
+    },
+  };
 
   return (
     <>
@@ -46,50 +44,45 @@ export function SideDrawer() {
       >
         <List>
           <Divider />
-          <StyledListItem onClick={() => setOpenDrawer(false)}>
-            <ListItemText>
-              <StyledRouterLink to="/home">
+          <ListItem disablePadding>
+            <ListItemButton component={Link} to="/home" onClick={() => setOpenDrawer(false)} sx={drawerItemSx}>
+              <ListItemIcon>
                 <HomeIcon />
-                <Typography>Home</Typography>
-              </StyledRouterLink>
-            </ListItemText>
-          </StyledListItem>
+              </ListItemIcon>
+              <ListItemText primary="Home" />
+            </ListItemButton>
+          </ListItem>
           <Divider />
-          <StyledListItem onClick={() => setOpenDrawer(false)}>
-            <ListItemText>
-              <StyledRouterLink to="/tokens">
+          <ListItem disablePadding>
+            <ListItemButton component={Link} to="/tokens" onClick={() => setOpenDrawer(false)} sx={drawerItemSx}>
+              <ListItemIcon>
                 <Key />
-                <Typography>Tokens</Typography>
-              </StyledRouterLink>
-            </ListItemText>
-          </StyledListItem>
+              </ListItemIcon>
+              <ListItemText primary="Tokens" />
+            </ListItemButton>
+          </ListItem>
           <Divider />
-          <StyledListItem onClick={() => setOpenDrawer(false)}>
-            <ListItemText>
-              <StyledRouterLink to="/settings">
+          <ListItem disablePadding>
+            <ListItemButton component={Link} to="/settings" onClick={() => setOpenDrawer(false)} sx={drawerItemSx}>
+              <ListItemIcon>
                 <SettingsIcon />
-                <Typography>Settings</Typography>
-              </StyledRouterLink>
-            </ListItemText>
-          </StyledListItem>
+              </ListItemIcon>
+              <ListItemText primary="Settings" />
+            </ListItemButton>
+          </ListItem>
           <Divider />
-          <StyledListItem>
-            <ListItemText>
-              <TouchpointBadge
-                anchor={{ vertical: 'bottom', horizontal: 'right' }}
-                sxStyle={{ bottom: '-20%', fontSize: '10px', height: '0.825rem', right: '20%', width: '7.75rem' }}
-              >
-                <StyledLogoutLink onClick={() => redirectToLogout('/api/auth/logout')}>
-                  <LogoutIcon />
-                  <Typography>Logout</Typography>
-                </StyledLogoutLink>
-              </TouchpointBadge>
-            </ListItemText>
-          </StyledListItem>
+          <ListItem disablePadding>
+            <ListItemButton onClick={() => redirectToLogout('/api/auth/logout')} sx={drawerItemSx}>
+              <ListItemIcon>
+                <LogoutIcon />
+              </ListItemIcon>
+              <ListItemText primary="Logout" />
+            </ListItemButton>
+          </ListItem>
           <Divider />
         </List>
       </Drawer>
-      <IconButton sx={{ color: theme.palette.primary.contrastText }} onClick={() => setOpenDrawer(!openDrawer)}>
+      <IconButton sx={{ color: theme.palette.secondary.contrastText }} onClick={() => setOpenDrawer(!openDrawer)}>
         <MenuIcon />
       </IconButton>
     </>

@@ -20,10 +20,10 @@ export const theme = createTheme({
       contrastText: '#fff',
     },
     secondary: {
-      main: '#ebda58',
-      light: 'rgb(239,225,121)',
-      dark: 'rgb(164,152,61)',
-      contrastText: 'rgba(0,0,0,0.87)',
+      main: '#e61eac',
+      light: 'rgb(235,81,189)',
+      dark: 'rgb(161,21,120)',
+      contrastText: '#ffffff',
     },
     error: {
       main: '#f44336',

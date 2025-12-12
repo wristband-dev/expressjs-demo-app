@@ -12,6 +12,9 @@ const apiClient = axios.create({
   baseURL,
   headers,
   withCredentials: true,
+  withXSRFToken: true,
+  xsrfCookieName: 'CSRF-TOKEN',
+  xsrfHeaderName: 'X-CSRF-TOKEN',
 });
 
 // Any HTTP 401s should trigger the user to go log in again.  This happens when their session cookie has expired
