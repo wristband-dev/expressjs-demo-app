@@ -72,7 +72,7 @@ This command will do the following:
 - Install all dependencies for both React and Express
 - Build the React asset bundle that will be served up by Express (asset bundle target location is `backend/dist/`)
 
-### 5) Run the application in "production" mode 
+### 5) Run the application in "production" mode
 
 Start up the Express server in "production" mode. This lets Express serve the React static assets bundle, and it runs on port `6001`.
 

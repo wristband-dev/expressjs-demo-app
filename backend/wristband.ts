@@ -10,9 +10,9 @@ import '@wristband/express-auth/jwt';
  * Wristband authentication client for handling OAuth flows (login, callback, logout).
  *
  * Use this client to:
- * - Initiate login redirects: `wristbandAuth.pagesRouter.login()`
- * - Handle OAuth callbacks: `wristbandAuth.pagesRouter.callback()`
- * - Handle logout: `wristbandAuth.pagesRouter.logout()`
+ * - Initiate login redirects: `wristbandAuth.login()`
+ * - Handle OAuth callbacks: `wristbandAuth.callback()`
+ * - Handle logout: `wristbandAuth.logout()`
  * - Create authentication middleware and session helpers
  */
 export const wristbandAuth = createWristbandAuth({
