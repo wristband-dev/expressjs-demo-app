@@ -5,8 +5,8 @@
   "version": "0.1.0",
   "private": true,
   "engines": {
-    "node": ">=18.12.1",
-    "npm": ">=8.19.2"
+    "node": ">=22.0.0",
+    "npm": ">=10.0.0"
   },
   "scripts": {
     "build": "npm run build --prefix frontend",
@@ -18,7 +18,7 @@
     "start": "npm start --prefix backend"
   },
   "devDependencies": {
-    "concurrently": "^9.2.0",
+    "concurrently": "^10.0.4",
     "husky": "^9.1.7"
   }
 }

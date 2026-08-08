@@ -5,8 +5,8 @@
   "version": "0.1.0",
   "private": true,
   "engines": {
-    "node": ">=20.0.0",
-    "npm": ">=9.6.0"
+    "node": ">=22.0.0",
+    "npm": ">=10.0.0"
   },
   "main": "server.ts",
   "scripts": {
@@ -19,17 +19,17 @@
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {
-    "@wristband/express-auth": "^6.1.0",
+    "@wristband/express-auth": "^6.2.0",
     "agentkeepalive": "^4.6.0",
-    "axios": "^1.13.6",
+    "axios": "^1.19.0",
     "compression": "^1.8.1",
-    "cors": "^2.8.5",
-    "dotenv": "^17.2.2",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
     "express": "^5.2.1",
-    "express-validator": "^7.3.1",
+    "express-validator": "^7.3.2",
     "lowdb": "^1.0.0",
     "stoppable": "^1.1.0",
-    "validator": "^13.15.26"
+    "validator": "^13.15.35"
   },
   "devDependencies": {
     "@types/compression": "^1.8.1",
@@ -41,12 +41,12 @@
     "@types/validator": "^13.15.3",
     "@typescript-eslint/eslint-plugin": "^8.57.2",
     "@typescript-eslint/parser": "^8.57.2",
-    "eslint": "^10.1.0",
+    "eslint": "^10.8.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.5",
     "nodemon": "^3.1.14",
-    "prettier": "^3.8.1",
-    "tsx": "^4.21.0",
+    "prettier": "^3.9.6",
+    "tsx": "^4.23.11",
     "typescript": "^5.9.3"
   }
 }
