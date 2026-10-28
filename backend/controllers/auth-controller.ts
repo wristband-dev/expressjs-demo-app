@@ -57,9 +57,6 @@ export async function logout(req: Request, res: Response) {
  * This API is the entrypoint for the React SPA.
  */
 export async function getSessionResponse(req: Request, res: Response) {
-  res.header('Cache-Control', 'no-store');
-  res.header('Pragma', 'no-cache');
-
   const { tenantId, userId } = req.session;
 
   /* WRISTBAND_TOUCHPOINT - RESOURCE API */
@@ -87,8 +84,6 @@ export async function getSessionResponse(req: Request, res: Response) {
  * present in the React SDK client-side cache.
  */
 export async function getTokenResponse(req: Request, res: Response) {
-  res.header('Cache-Control', 'no-store');
-  res.header('Pragma', 'no-cache');
   /* WRISTBAND_TOUCHPOINT - AUTHENTICATION */
   const tokenResponse = req.session.getTokenResponse();
   return res.status(200).json(tokenResponse);

@@ -6,7 +6,7 @@
   "private": true,
   "engines": {
     "node": ">=22.0.0",
-    "npm": ">=10.0.0"
+    "npm": ">=10.5.1"
   },
   "main": "server.ts",
   "scripts": {
@@ -19,9 +19,9 @@
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {
-    "@wristband/express-auth": "^6.2.0",
+    "@wristband/express-auth": "7.0.0",
     "agentkeepalive": "^4.6.0",
-    "axios": "^1.19.0",
+    "axios": "^1.21.0",
     "compression": "^1.8.1",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
