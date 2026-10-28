@@ -6,7 +6,7 @@
   "private": true,
   "engines": {
     "node": ">=22.0.0",
-    "npm": ">=10.0.0"
+    "npm": ">=10.5.1"
   },
   "scripts": {
     "build": "npm run build --prefix frontend",
@@ -18,7 +18,7 @@
     "start": "npm start --prefix backend"
   },
   "devDependencies": {
-    "concurrently": "^10.0.4",
+    "concurrently": "^10.0.6",
     "husky": "^9.1.7"
   }
 }

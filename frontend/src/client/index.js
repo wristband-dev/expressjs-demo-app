@@ -22,7 +22,7 @@ const apiClient = axios.create({
 apiClient.interceptors.response.use(undefined, async (error) => {
   if (isUnauthorizedError(error) || isForbiddenError(error)) {
     /* WRISTBAND_TOUCHPOINT - AUTHENTICATION */
-    redirectToLogin('/api/auth/login');
+    redirectToLogin('/api/auth/login', { returnUrl: window.location.pathname });
   }
 
   return Promise.reject(error);
