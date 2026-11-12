@@ -4,7 +4,7 @@ import * as invoiceService from '../services/invoice-service';
 import * as wristbandService from '../services/wristband-service';
 import { reqValidation } from '../utils/validation';
 import { FORBIDDEN_ACCESS, INVOICE_READ_PERM, INVOICE_WRITE_PERM } from '../utils/constants';
-import { bearerToken, hasAccessToApi } from '../utils/util';
+import { bearerToken, getRouteParam, hasAccessToApi } from '../utils/util';
 import { InvoiceStatus } from '../types/invoice';
 
 export async function getHelloWorld(req: Request, res: Response) {
@@ -59,7 +59,7 @@ export async function updateInvoice(req: Request, res: Response, next: NextFunct
   }
 
   const { tenantId } = req.session;
-  const { invoiceId } = req.params;
+  const invoiceId = getRouteParam(req.params.invoiceId);
   const requiredPermissions = [INVOICE_WRITE_PERM];
 
   try {

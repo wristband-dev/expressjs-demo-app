@@ -21,9 +21,9 @@ app.use('/api/v1', appRoutes);
 // Serve static assets if in production mode.
 if (process.env.NODE_ENV === 'production') {
   console.info('Production ENV detected. Serving up static assets.');
-  app.use(express.static(path.join(__dirname, 'dist')));
+  app.use(express.static(path.join(import.meta.dirname, 'dist')));
   app.get('{*catchAll}', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'dist', 'index.html'));
+    res.sendFile(path.resolve(import.meta.dirname, 'dist', 'index.html'));
   });
 }
 

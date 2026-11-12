@@ -1,4 +1,4 @@
-import { createWristbandAuth } from '@wristband/express-auth';
+import { createWristbandAuth, type SessionOptions } from '@wristband/express-auth';
 import { createWristbandSession } from '@wristband/express-auth/session';
 
 // Enable req.auth typing on Express Request when using JWT auth strategy
@@ -25,7 +25,7 @@ export const wristbandAuth = createWristbandAuth({
 /**
  * Session configuration used across all middlewares.
  */
-const sessionOptions = {
+const sessionOptions: SessionOptions = {
   secrets: 'dummyval-b5c1-463a-812c-0d8db87c0ec5', // IMPORTANT: In production, use a strong secret!!
   secure: false, // IMPORTANT: In production, set "secure: true"!!
 };

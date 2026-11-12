@@ -25,3 +25,10 @@ export function hasAccessToApi(requiredPermissions: string[] = [], currentPermis
     return requiredPermissions.includes(currentPermission);
   });
 }
+
+export function getRouteParam(value: string | string[]): string {
+  if (typeof value !== 'string') {
+    throw new Error('Expected a single route parameter');
+  }
+  return value;
+}
