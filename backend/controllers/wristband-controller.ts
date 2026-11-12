@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 
 import * as wristbandService from '../services/wristband-service';
-import { bearerToken, getValueForDeletableField } from '../utils/util';
+import { bearerToken, getRouteParam, getValueForDeletableField } from '../utils/util';
 import { reqValidation, emailExists, hasConstraintsViolations } from '../utils/validation';
 
 export async function getUser(req: Request, res: Response, next: NextFunction) {
@@ -59,7 +59,7 @@ export async function updateUser(req: Request, res: Response, next: NextFunction
     return res.status(400).json(error.data);
   }
 
-  const { userId } = req.params;
+  const userId = getRouteParam(req.params.userId);
   const userData = {
     givenName: getValueForDeletableField(req.body.givenName),
     familyName: getValueForDeletableField(req.body.familyName),

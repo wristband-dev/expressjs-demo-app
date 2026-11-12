@@ -4,8 +4,9 @@
   "author": "Wristband",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "engines": {
-    "node": ">=22.0.0",
+    "node": ">=22.3.0",
     "npm": ">=10.5.1"
   },
   "main": "server.ts",
@@ -13,13 +14,13 @@
     "build": "tsc",
     "dev": "nodemon",
     "typecheck": "tsc --noEmit",
-    "reset-db": "ts-node reset-db.ts",
+    "reset-db": "tsx reset-db.ts",
     "start": "NODE_ENV=production PORT=6001 tsx -r dotenv/config server.ts",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {
-    "@wristband/express-auth": "7.0.0",
+    "@wristband/express-auth": "^7.0.1",
     "agentkeepalive": "^4.6.0",
     "axios": "^1.21.0",
     "compression": "^1.8.1",
